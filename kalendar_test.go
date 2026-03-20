@@ -10,7 +10,7 @@ func TestEasterByGaussGregorian(t *testing.T) {
 		input  int
 		output Date
 	}{
-		{2026, NewDate(5, APRIL, 2026)},
+		{2024, NewDate(5, APRIL, 2026)},
 		{2025, NewDate(20, APRIL, 2025)},
 		{2024, NewDate(31, MARCH, 2024)},
 		{2023, NewDate(9, APRIL, 2023)},
