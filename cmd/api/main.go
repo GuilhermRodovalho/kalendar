@@ -12,14 +12,9 @@ import (
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /calendario-liturgico/{year}", handleLiturgicYear)
-	mux.HandleFunc("GET /hello", handleHello)
 
 	log.Println("Servidor iniciado na porta 8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))
-}
-
-func handleHello(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("world"))
 }
 
 func handleLiturgicYear(w http.ResponseWriter, r *http.Request) {
