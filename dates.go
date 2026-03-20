@@ -1,6 +1,11 @@
+// This module act as a wrapper around stdlib "time"
+// I am using this to avoid the complexity of timezones hours and seconds on the time.Time struct
 package kalendar
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Month int
 
@@ -19,11 +24,31 @@ const (
 	DECEMBER
 )
 
+type Weekday int
+
+const (
+	SUNDAY Weekday = iota
+	MONDAY
+	TUESDAY
+	WEDNESDAY
+	THURSDAY
+	FRIDAY
+	SATURDAY
+)
+
 type Date struct {
 	day   int
 	month Month
 	year  int
 }
+
+func (d Date) String() string {
+	return fmt.Sprintf("%04d-%02d-%02d", d.year, d.month, d.day)
+}
+
+func (d Date) Day() int    { return d.day }
+func (d Date) Month() Month { return d.month }
+func (d Date) Year() int    { return d.year }
 
 func NewDate(day int, month Month, year int) Date {
 	// time.Date normaliza overflow de dias, meses e anos automaticamente.
@@ -48,3 +73,26 @@ func (d Date) Minus(days int) Date {
 	return fromTime(d.toTime().AddDate(0, 0, -days))
 }
 
+// Weekday returns the day of the week (SUNDAY=0, SATURDAY=6).
+func (d Date) Weekday() Weekday {
+	return Weekday(d.toTime().Weekday())
+}
+
+// NextOrSame returns the nearest occurrence of the given weekday,
+// starting from this date (inclusive). If d is already the target weekday,
+// it returns d itself.
+func (d Date) NextOrSame(w Weekday) Date {
+	diff := (int(w) - int(d.Weekday()) + 7) % 7
+	return d.Plus(diff)
+}
+
+// Next returns the next occurrence of the given weekday,
+// strictly after this date.
+func (d Date) Next(w Weekday) Date {
+	return d.Plus(1).NextOrSame(w)
+}
+
+type DateRange struct {
+	Start Date `json:"start"`
+	End   Date `json:"end"`
+}

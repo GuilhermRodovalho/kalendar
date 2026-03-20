@@ -1,39 +1,82 @@
 package kalendar
 
-import "time"
+type Calendar int
 
 const (
-	GREGORIAN = iota
+	GREGORIAN Calendar = iota
 	JULIAN
 )
 
 type MobileDates struct {
-	ash_wednesday             Date
-	palm_sunday               Date
-	easter                    Date
-	ascension_of_the_lord     Date
-	pentecost                 Date
-	holy_trinity              Date
-	corpus_christi            Date
-	feast_of_the_sacred_heart Date
+	AshWednesday        Date `json:"ash_wednesday"`
+	PalmSunday          Date `json:"palm_sunday"`
+	Easter              Date `json:"easter"`
+	AscensionOfTheLord  Date `json:"ascension_of_the_lord"`
+	Pentecost           Date `json:"pentecost"`
+	HolyTrinity         Date `json:"holy_trinity"`
+	CorpusChristi       Date `json:"corpus_christi"`
+	FeastOfSacredHeart  Date `json:"feast_of_the_sacred_heart"`
+}
+
+type LiturgicSeasons struct {
+	Advent         DateRange `json:"advent"`
+	Christmas      DateRange `json:"christmas"`
+	OrdinaryTimeI  DateRange `json:"ordinary_time_i"`
+	Lent           DateRange `json:"lent"`
+	EasterTriduum  DateRange `json:"easter_triduum"`
+	EasterSeason   DateRange `json:"easter_season"`
+	OrdinaryTimeII DateRange `json:"ordinary_time_ii"`
 }
 
 type LiturgicYear struct {
-	MobileDates
-	// todo: add liturgic times, like Lent, Advent etc.
+	MobileDates    `json:"mobile_dates"`
+	LiturgicSeasons `json:"seasons"`
+}
+
+// firstSundayOfAdvent returns the first Sunday of Advent for the given calendar year.
+// It falls between November 27 and December 3.
+func firstSundayOfAdvent(year int) Date {
+	return NewDate(27, NOVEMBER, year).NextOrSame(SUNDAY)
+}
+
+// baptismOfTheLord returns the Feast of the Baptism of the Lord.
+// It is the Sunday after Epiphany (January 6).
+// If Epiphany falls on a Sunday, the Baptism is the following Monday.
+func baptismOfTheLord(year int) Date {
+	epiphany := NewDate(6, JANUARY, year)
+	if epiphany.Weekday() == SUNDAY {
+		return epiphany.Plus(1)
+	}
+	return epiphany.Next(SUNDAY)
 }
 
 func liturgicYearFromEaster(easter Date) *LiturgicYear {
+	year := easter.year
+	ashWednesday := easter.Minus(46)
+	pentecost := easter.Plus(49)
+	adventStart := firstSundayOfAdvent(year - 1)
+	nextAdventStart := firstSundayOfAdvent(year)
+	baptism := baptismOfTheLord(year)
+
 	return &LiturgicYear{
 		MobileDates: MobileDates{
-			ash_wednesday:             easter.Minus(46),
-			palm_sunday:               easter.Minus(7),
-			easter:                    easter,
-			ascension_of_the_lord:     easter.Plus(39),
-			pentecost:                 easter.Plus(49),
-			holy_trinity:              easter.Plus(56),
-			corpus_christi:            easter.Plus(60),
-			feast_of_the_sacred_heart: easter.Plus(68),
+			AshWednesday:       ashWednesday,
+			PalmSunday:         easter.Minus(7),
+			Easter:             easter,
+			AscensionOfTheLord: easter.Plus(39),
+			Pentecost:          pentecost,
+			HolyTrinity:        easter.Plus(56),
+			CorpusChristi:      easter.Plus(60),
+			FeastOfSacredHeart: easter.Plus(68),
+		},
+		LiturgicSeasons: LiturgicSeasons{
+			Advent:         DateRange{adventStart, NewDate(24, DECEMBER, year-1)},
+			Christmas:      DateRange{NewDate(25, DECEMBER, year-1), baptism},
+			OrdinaryTimeI:  DateRange{baptism.Plus(1), ashWednesday.Minus(1)},
+			Lent:           DateRange{ashWednesday, easter.Minus(4)},
+			EasterTriduum:  DateRange{easter.Minus(3), easter.Minus(1)},
+			EasterSeason:   DateRange{easter, pentecost},
+			OrdinaryTimeII: DateRange{pentecost.Plus(1), nextAdventStart.Minus(1)},
 		},
 	}
 }
@@ -42,54 +85,52 @@ func liturgicYearFromEaster(easter Date) *LiturgicYear {
 // Available on: https://en.wikipedia.org/wiki/Date_of_Easter#Gauss's_Easter_algorithm
 //
 // You should pass either GREGORIAN or JULIAN as calendar, if other value is passed, GREGORIAN is considered
-func EasterByGauss(year int, calendar int) time.Time {
+func EasterByGauss(year int, calendar Calendar) Date {
 	a := year % 19
 	b := year % 4
 	c := year % 7
-	M := 0
-	N := 0
+	m := 0
+	n := 0
 
 	switch calendar {
 	case JULIAN:
-		M = 15
-		N = 6
+		m = 15
+		n = 6
 
 	default:
 		k := year / 100
 		p := (13 + 8*k) / 25
 		q := k / 4
-		M = (15 - p + k - q) % 30
-		N = (4 + k - q) % 7
+		m = (15 - p + k - q) % 30
+		n = (4 + k - q) % 7
 	}
 
-	d := (19*a + M) % 30
-	e := (2*b + 4*c + 6*d + N) % 7
-	march_easter := d + e + 22
-	april_easter := d + e - 9
+	d := (19*a + m) % 30
+	e := (2*b + 4*c + 6*d + n) % 7
+	marchEaster := d + e + 22
+	aprilEaster := d + e - 9
 
-	if april_easter == 25 && d == 28 && a > 10 {
-		april_easter = 18
+	if aprilEaster == 25 && d == 28 && a > 10 {
+		aprilEaster = 18
 	}
-	if april_easter == 26 && d == 29 && e == 6 {
-		april_easter = 19
+	if aprilEaster == 26 && d == 29 && e == 6 {
+		aprilEaster = 19
 	}
-	if march_easter <= 31 {
-		return time.Date(year, time.March, march_easter, 0, 0, 0, 0, time.UTC)
+	if marchEaster <= 31 {
+		return NewDate(marchEaster, MARCH, year)
 	}
-	return time.Date(year, time.April, april_easter, 0, 0, 0, 0, time.UTC)
+	return NewDate(aprilEaster, APRIL, year)
 }
 
-// returns start and end day of lent
-// start day will be ash wednesday
-// end will be Maundy thursday
-func GetLent(year int) (time.Time, time.Time) {
-	easter := EasterByGauss(year, GREGORIAN)
-	ash_wednesday := easter.AddDate(0, 0, -46) // Easter - 46 days == Ash Wednesday
-
-	return ash_wednesday, easter.AddDate(0, 0, -3) // Lent ends on Thursday
+// Lent returns start and end day of lent.
+// Start day is Ash Wednesday, end is Holy Wednesday (day before the Easter Triduum).
+func Lent(year int) (Date, Date) {
+	ly := LiturgicYearOf(year)
+	return ly.LiturgicSeasons.Lent.Start, ly.LiturgicSeasons.Lent.End
 }
 
-func GetLiturgicYearOf(year int) *LiturgicYear {
+// LiturgicYearOf returns the full liturgical year for the given civil year.
+func LiturgicYearOf(year int) *LiturgicYear {
 	easter := EasterByGauss(year, GREGORIAN)
-	return liturgicYearFromEaster(Date{day: easter.Day(), month: Month(easter.Month()), year: easter.Year()})
+	return liturgicYearFromEaster(easter)
 }
