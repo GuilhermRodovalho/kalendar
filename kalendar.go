@@ -7,29 +7,51 @@ const (
 	JULIAN
 )
 
+type LiturgicalColor string
+
+const (
+	Green  LiturgicalColor = "green"
+	Purple LiturgicalColor = "purple"
+	White  LiturgicalColor = "white"
+	Red    LiturgicalColor = "red"
+	Rose   LiturgicalColor = "rose"
+	Black  LiturgicalColor = "black"
+)
+
+type Season struct {
+	DateRange
+	Color LiturgicalColor `json:"color"`
+}
+
+type Feast struct {
+	Date  Date            `json:"date"`
+	Color LiturgicalColor `json:"color"`
+}
+
 type MobileDates struct {
-	AshWednesday        Date `json:"ash_wednesday"`
-	PalmSunday          Date `json:"palm_sunday"`
-	Easter              Date `json:"easter"`
-	AscensionOfTheLord  Date `json:"ascension_of_the_lord"`
-	Pentecost           Date `json:"pentecost"`
-	HolyTrinity         Date `json:"holy_trinity"`
-	CorpusChristi       Date `json:"corpus_christi"`
-	FeastOfSacredHeart  Date `json:"feast_of_the_sacred_heart"`
+	AshWednesday       Feast `json:"ash_wednesday"`
+	PalmSunday         Feast `json:"palm_sunday"`
+	GoodFriday         Feast `json:"good_friday"`
+	Easter             Feast `json:"easter"`
+	AscensionOfTheLord Feast `json:"ascension_of_the_lord"`
+	Pentecost          Feast `json:"pentecost"`
+	HolyTrinity        Feast `json:"holy_trinity"`
+	CorpusChristi      Feast `json:"corpus_christi"`
+	FeastOfSacredHeart Feast `json:"feast_of_the_sacred_heart"`
 }
 
 type LiturgicSeasons struct {
-	Advent         DateRange `json:"advent"`
-	Christmas      DateRange `json:"christmas"`
-	OrdinaryTimeI  DateRange `json:"ordinary_time_i"`
-	Lent           DateRange `json:"lent"`
-	EasterTriduum  DateRange `json:"easter_triduum"`
-	EasterSeason   DateRange `json:"easter_season"`
-	OrdinaryTimeII DateRange `json:"ordinary_time_ii"`
+	Advent         Season `json:"advent"`
+	Christmas      Season `json:"christmas"`
+	OrdinaryTimeI  Season `json:"ordinary_time_i"`
+	Lent           Season `json:"lent"`
+	EasterTriduum  Season `json:"easter_triduum"`
+	EasterSeason   Season `json:"easter_season"`
+	OrdinaryTimeII Season `json:"ordinary_time_ii"`
 }
 
 type LiturgicYear struct {
-	MobileDates    `json:"mobile_dates"`
+	MobileDates     `json:"mobile_dates"`
 	LiturgicSeasons `json:"seasons"`
 }
 
@@ -60,23 +82,24 @@ func liturgicYearFromEaster(easter Date) *LiturgicYear {
 
 	return &LiturgicYear{
 		MobileDates: MobileDates{
-			AshWednesday:       ashWednesday,
-			PalmSunday:         easter.Minus(7),
-			Easter:             easter,
-			AscensionOfTheLord: easter.Plus(39),
-			Pentecost:          pentecost,
-			HolyTrinity:        easter.Plus(56),
-			CorpusChristi:      easter.Plus(60),
-			FeastOfSacredHeart: easter.Plus(68),
+			AshWednesday:       Feast{ashWednesday, Purple},
+			PalmSunday:         Feast{easter.Minus(7), Red},
+			GoodFriday:         Feast{easter.Minus(2), Red},
+			Easter:             Feast{easter, White},
+			AscensionOfTheLord: Feast{easter.Plus(39), White},
+			Pentecost:          Feast{pentecost, Red},
+			HolyTrinity:        Feast{easter.Plus(56), White},
+			CorpusChristi:      Feast{easter.Plus(60), White},
+			FeastOfSacredHeart: Feast{easter.Plus(68), White},
 		},
 		LiturgicSeasons: LiturgicSeasons{
-			Advent:         DateRange{adventStart, NewDate(24, DECEMBER, year-1)},
-			Christmas:      DateRange{NewDate(25, DECEMBER, year-1), baptism},
-			OrdinaryTimeI:  DateRange{baptism.Plus(1), ashWednesday.Minus(1)},
-			Lent:           DateRange{ashWednesday, easter.Minus(4)},
-			EasterTriduum:  DateRange{easter.Minus(3), easter.Minus(1)},
-			EasterSeason:   DateRange{easter, pentecost},
-			OrdinaryTimeII: DateRange{pentecost.Plus(1), nextAdventStart.Minus(1)},
+			Advent:         Season{DateRange{adventStart, NewDate(24, DECEMBER, year-1)}, Purple},
+			Christmas:      Season{DateRange{NewDate(25, DECEMBER, year-1), baptism}, White},
+			OrdinaryTimeI:  Season{DateRange{baptism.Plus(1), ashWednesday.Minus(1)}, Green},
+			Lent:           Season{DateRange{ashWednesday, easter.Minus(4)}, Purple},
+			EasterTriduum:  Season{DateRange{easter.Minus(3), easter.Minus(1)}, White},
+			EasterSeason:   Season{DateRange{easter, pentecost}, White},
+			OrdinaryTimeII: Season{DateRange{pentecost.Plus(1), nextAdventStart.Minus(1)}, Green},
 		},
 	}
 }

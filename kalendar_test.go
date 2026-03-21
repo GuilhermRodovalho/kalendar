@@ -68,23 +68,28 @@ func TestLiturgicYearMobileDates(t *testing.T) {
 	ly := LiturgicYearOf(2026)
 
 	cases := []struct {
-		name     string
-		got      Date
-		expected Date
+		name          string
+		got           Feast
+		expectedDate  Date
+		expectedColor LiturgicalColor
 	}{
-		{"AshWednesday", ly.AshWednesday, NewDate(18, FEBRUARY, 2026)},
-		{"PalmSunday", ly.PalmSunday, NewDate(29, MARCH, 2026)},
-		{"Easter", ly.Easter, NewDate(5, APRIL, 2026)},
-		{"AscensionOfTheLord", ly.AscensionOfTheLord, NewDate(14, MAY, 2026)},
-		{"Pentecost", ly.Pentecost, NewDate(24, MAY, 2026)},
-		{"HolyTrinity", ly.HolyTrinity, NewDate(31, MAY, 2026)},
-		{"CorpusChristi", ly.CorpusChristi, NewDate(4, JUNE, 2026)},
-		{"FeastOfSacredHeart", ly.FeastOfSacredHeart, NewDate(12, JUNE, 2026)},
+		{"AshWednesday", ly.AshWednesday, NewDate(18, FEBRUARY, 2026), Purple},
+		{"PalmSunday", ly.PalmSunday, NewDate(29, MARCH, 2026), Red},
+		{"GoodFriday", ly.GoodFriday, NewDate(3, APRIL, 2026), Red},
+		{"Easter", ly.Easter, NewDate(5, APRIL, 2026), White},
+		{"AscensionOfTheLord", ly.AscensionOfTheLord, NewDate(14, MAY, 2026), White},
+		{"Pentecost", ly.Pentecost, NewDate(24, MAY, 2026), Red},
+		{"HolyTrinity", ly.HolyTrinity, NewDate(31, MAY, 2026), White},
+		{"CorpusChristi", ly.CorpusChristi, NewDate(4, JUNE, 2026), White},
+		{"FeastOfSacredHeart", ly.FeastOfSacredHeart, NewDate(12, JUNE, 2026), White},
 	}
 
 	for _, c := range cases {
-		if c.got != c.expected {
-			t.Errorf("%s: expected %v, got %v", c.name, c.expected, c.got)
+		if c.got.Date != c.expectedDate {
+			t.Errorf("%s date: expected %v, got %v", c.name, c.expectedDate, c.got.Date)
+		}
+		if c.got.Color != c.expectedColor {
+			t.Errorf("%s color: expected %v, got %v", c.name, c.expectedColor, c.got.Color)
 		}
 	}
 }
@@ -93,18 +98,19 @@ func TestLiturgicSeasons(t *testing.T) {
 	ly := LiturgicYearOf(2026)
 
 	seasons := []struct {
-		name  string
-		got   DateRange
-		start Date
-		end   Date
+		name          string
+		got           Season
+		start         Date
+		end           Date
+		expectedColor LiturgicalColor
 	}{
-		{"Advent", ly.Advent, NewDate(30, NOVEMBER, 2025), NewDate(24, DECEMBER, 2025)},
-		{"Christmas", ly.Christmas, NewDate(25, DECEMBER, 2025), NewDate(11, JANUARY, 2026)},
-		{"OrdinaryTimeI", ly.OrdinaryTimeI, NewDate(12, JANUARY, 2026), NewDate(17, FEBRUARY, 2026)},
-		{"Lent", ly.LiturgicSeasons.Lent, NewDate(18, FEBRUARY, 2026), NewDate(1, APRIL, 2026)},
-		{"EasterTriduum", ly.EasterTriduum, NewDate(2, APRIL, 2026), NewDate(4, APRIL, 2026)},
-		{"EasterSeason", ly.EasterSeason, NewDate(5, APRIL, 2026), NewDate(24, MAY, 2026)},
-		{"OrdinaryTimeII", ly.OrdinaryTimeII, NewDate(25, MAY, 2026), NewDate(28, NOVEMBER, 2026)},
+		{"Advent", ly.Advent, NewDate(30, NOVEMBER, 2025), NewDate(24, DECEMBER, 2025), Purple},
+		{"Christmas", ly.Christmas, NewDate(25, DECEMBER, 2025), NewDate(11, JANUARY, 2026), White},
+		{"OrdinaryTimeI", ly.OrdinaryTimeI, NewDate(12, JANUARY, 2026), NewDate(17, FEBRUARY, 2026), Green},
+		{"Lent", ly.LiturgicSeasons.Lent, NewDate(18, FEBRUARY, 2026), NewDate(1, APRIL, 2026), Purple},
+		{"EasterTriduum", ly.EasterTriduum, NewDate(2, APRIL, 2026), NewDate(4, APRIL, 2026), White},
+		{"EasterSeason", ly.EasterSeason, NewDate(5, APRIL, 2026), NewDate(24, MAY, 2026), White},
+		{"OrdinaryTimeII", ly.OrdinaryTimeII, NewDate(25, MAY, 2026), NewDate(28, NOVEMBER, 2026), Green},
 	}
 
 	for _, s := range seasons {
@@ -113,6 +119,9 @@ func TestLiturgicSeasons(t *testing.T) {
 		}
 		if s.got.End != s.end {
 			t.Errorf("%s end: expected %v, got %v", s.name, s.end, s.got.End)
+		}
+		if s.got.Color != s.expectedColor {
+			t.Errorf("%s color: expected %v, got %v", s.name, s.expectedColor, s.got.Color)
 		}
 	}
 }
