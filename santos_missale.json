@@ -1,0 +1,1376 @@
+[
+  {
+    "dia": "1 de janeiro",
+    "nome": "Santa Maria, Mãe de Deus",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de janeiro",
+    "nome": "Santos Basílio Magno e Gregório Nazianzeno, bispos e doutores da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "3 de janeiro",
+    "nome": "Santíssimo Nome de Jesus",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de janeiro",
+    "nome": "São Raimundo de Penhaforte, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de janeiro",
+    "nome": "Santo Hilário, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de janeiro",
+    "nome": "Santo Antão, abade",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "20 de janeiro",
+    "nome": "São Fabiano, papa e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "20 de janeiro",
+    "nome": "São Sebastião, mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "21 de janeiro",
+    "nome": "Santa Inês, virgem e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "22 de janeiro",
+    "nome": "São Vicente, diácono e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "24 de janeiro",
+    "nome": "São Francisco de Sales, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de janeiro",
+    "nome": "Conversão de São Paulo, apóstolo",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "26 de janeiro",
+    "nome": "Santos Timóteo e Tito, bispos",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "27 de janeiro",
+    "nome": "Santa Ângela Merici, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de janeiro",
+    "nome": "São Tomás de Aquino, presbítero e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "31 de janeiro",
+    "nome": "São João Bosco, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de fevereiro",
+    "nome": "Apresentação do Senhor",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "3 de fevereiro",
+    "nome": "São Brás, bispo e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "3 de fevereiro",
+    "nome": "Santo Oscar, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de fevereiro",
+    "nome": "Santa Águeda, virgem e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "6 de fevereiro",
+    "nome": "São Paulo Miki e companheiros, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "8 de fevereiro",
+    "nome": "São Jerônimo Emiliani",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "8 de fevereiro",
+    "nome": "Santa Josefina Bakhita, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "10 de fevereiro",
+    "nome": "Santa Escolástica, virgem",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de fevereiro",
+    "nome": "Bem-aventurada Virgem Maria de Lourdes",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "14 de fevereiro",
+    "nome": "Santos Cirilo, monge, e Metódio, bispo",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de fevereiro",
+    "nome": "Sete Santos Fundadores da Ordem dos Servitas",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "21 de fevereiro",
+    "nome": "São Pedro Damião, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de fevereiro",
+    "nome": "Cátedra de São Pedro, apóstolo",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "27 de fevereiro",
+    "nome": "São Gregório de Narek, abade e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de fevereiro",
+    "nome": "São Policarpo, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "4 de março",
+    "nome": "São Casimiro",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de março",
+    "nome": "Santas Perpétua e Felicidade, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "8 de março",
+    "nome": "São João de Deus, religioso",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de março",
+    "nome": "Santa Francisca Romana, religiosa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de março",
+    "nome": "São Patrício, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "18 de março",
+    "nome": "São Cirilo de Jerusalém, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de março",
+    "nome": "São José, esposo da Bem-aventurada Virgem Maria",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de março",
+    "nome": "São Turíbio de Mogrovejo, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de março",
+    "nome": "Anunciação do Senhor",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de abril",
+    "nome": "São Francisco de Paula, eremita",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "4 de abril",
+    "nome": "Santo Isidoro, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de abril",
+    "nome": "São Vicente Ferrer, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de abril",
+    "nome": "São João Batista de La Salle, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de abril",
+    "nome": "Santo Estanislau, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "13 de abril",
+    "nome": "São Martinho I, papa e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "21 de abril",
+    "nome": "Santo Anselmo, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de abril",
+    "nome": "São Jorge, mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "23 de abril",
+    "nome": "Santo Adalberto, bispo e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "24 de abril",
+    "nome": "São Fiel de Sigmaringa, presbítero e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "25 de abril",
+    "nome": "São Marcos, evangelista",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "28 de abril",
+    "nome": "São Pedro Chanel, presbítero e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "28 de abril",
+    "nome": "São Luís Maria Grignion de Montfort, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "29 de abril",
+    "nome": "Santa Catarina de Sena, virgem e doutora da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "30 de abril",
+    "nome": "São Pio V, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "1 de maio",
+    "nome": "São José Operário",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de maio",
+    "nome": "Santo Atanásio, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "3 de maio",
+    "nome": "Santos Filipe e Tiago, apóstolos",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "10 de maio",
+    "nome": "São João de Ávila, presbítero e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de maio",
+    "nome": "Santos Nereu e Aquiles, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "12 de maio",
+    "nome": "São Pancrácio, mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "13 de maio",
+    "nome": "Bem-aventurada Virgem Maria de Fátima",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "14 de maio",
+    "nome": "São Matias, apóstolo",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "18 de maio",
+    "nome": "São João I, papa e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "20 de maio",
+    "nome": "São Bernardino de Sena, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "21 de maio",
+    "nome": "Santos Cristóvão Magalhães, presbítero, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "22 de maio",
+    "nome": "Santa Rita de Cássia, religiosa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de maio",
+    "nome": "São Beda Venerável, presbítero e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de maio",
+    "nome": "São Gregório VII, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de maio",
+    "nome": "Santa Maria Madalena de Pazzi, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "26 de maio",
+    "nome": "São Filipe Neri, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "27 de maio",
+    "nome": "Santo Agostinho de Cantuária, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "29 de maio",
+    "nome": "São Paulo VI, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "31 de maio",
+    "nome": "Visitação da Bem-aventurada Virgem Maria",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "1 de junho",
+    "nome": "São Justino, mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "2 de junho",
+    "nome": "Santos Marcelino e Pedro, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "3 de junho",
+    "nome": "Santos Carlos Lwanga e companheiros, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "5 de junho",
+    "nome": "São Bonifácio, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "6 de junho",
+    "nome": "São Norberto, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "8 de junho",
+    "nome": "Santo Efrém, diácono e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de junho",
+    "nome": "São José de Anchieta, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de junho",
+    "nome": "São Barnabé, apóstolo",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "13 de junho",
+    "nome": "Santo Antônio de Pádua, presbítero e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de junho",
+    "nome": "São Romualdo, abade",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "21 de junho",
+    "nome": "São Luís Gonzaga, religioso",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de junho",
+    "nome": "São Paulino de Nola, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de junho",
+    "nome": "Santos João Fisher, bispo, e Tomás More, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "24 de junho",
+    "nome": "Natividade de São João Batista",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "27 de junho",
+    "nome": "São Cirilo de Alexandria, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de junho",
+    "nome": "Santo Irineu, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "29 de junho",
+    "nome": "Santos Pedro e Paulo, apóstolos",
+    "grau": "Solenidade",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "30 de junho",
+    "nome": "Santos Protomártires da Igreja de Roma",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "3 de julho",
+    "nome": "São Tomé, apóstolo",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "4 de julho",
+    "nome": "Santa Isabel de Portugal",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de julho",
+    "nome": "Santo Antônio Maria Zaccaria, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "6 de julho",
+    "nome": "Santa Maria Goretti, virgem e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "8 de julho",
+    "nome": "Santo Agostinho Zhao Rong, presbítero, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "9 de julho",
+    "nome": "Santa Paulina do Coração Agonizante de Jesus, virgem",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de julho",
+    "nome": "São Bento, abade",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de julho",
+    "nome": "Santo Henrique",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "14 de julho",
+    "nome": "São Camilo de Lellis, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "15 de julho",
+    "nome": "São Boaventura, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de julho",
+    "nome": "Bem-aventurada Virgem Maria do Monte Carmelo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de julho",
+    "nome": "Bem-aventurado Inácio de Azevedo, presbítero, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "20 de julho",
+    "nome": "Santo Apolinário, bispo e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "21 de julho",
+    "nome": "São Lourenço de Bríndisi, presbítero e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de julho",
+    "nome": "Santa Maria Madalena",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de julho",
+    "nome": "Santa Brígida, religiosa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "24 de julho",
+    "nome": "São Charbel Makhluf, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de julho",
+    "nome": "São Tiago, apóstolo",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "26 de julho",
+    "nome": "Santos Joaquim e Ana, pais da Bem-aventurada Virgem Maria",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "29 de julho",
+    "nome": "Santos Marta, Maria e Lázaro",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "30 de julho",
+    "nome": "São Pedro Crisólogo, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "31 de julho",
+    "nome": "Santo Inácio de Loyola, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "1 de agosto",
+    "nome": "Santo Afonso Maria de Ligório, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de agosto",
+    "nome": "Santo Eusébio de Vercelli, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de agosto",
+    "nome": "São Pedro Julião Eymard, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "4 de agosto",
+    "nome": "São João Maria Vianney, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de agosto",
+    "nome": "Dedicação da Basílica de Santa Maria Maior",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "6 de agosto",
+    "nome": "Transfiguração do Senhor",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de agosto",
+    "nome": "São Sisto II, papa, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "7 de agosto",
+    "nome": "São Caetano, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "8 de agosto",
+    "nome": "São Domingos, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de agosto",
+    "nome": "Santa Teresa Benedita da Cruz (Edith Stein), virgem e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "10 de agosto",
+    "nome": "São Lourenço, diácono e mártir",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "11 de agosto",
+    "nome": "Santa Clara, virgem",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de agosto",
+    "nome": "Santa Joana Francisca de Chantal, religiosa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de agosto",
+    "nome": "Santa Dulce Lopes Pontes, virgem",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de agosto",
+    "nome": "Santos Ponciano, papa, e Hipólito, presbítero, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "14 de agosto",
+    "nome": "São Maximiliano Maria Kolbe, presbítero e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "15 de agosto",
+    "nome": "Assunção da Bem-aventurada Virgem Maria",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de agosto",
+    "nome": "Santo Estêvão da Hungria",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de agosto",
+    "nome": "São João Eudes, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "20 de agosto",
+    "nome": "São Bernardo, abade e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "21 de agosto",
+    "nome": "São Pio X, papa",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de agosto",
+    "nome": "Bem-aventurada Virgem Maria Rainha",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de agosto",
+    "nome": "Santa Rosa de Lima, virgem",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "24 de agosto",
+    "nome": "São Bartolomeu, apóstolo",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "25 de agosto",
+    "nome": "São Luís",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de agosto",
+    "nome": "São José de Calasanz, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "27 de agosto",
+    "nome": "Santa Mônica",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de agosto",
+    "nome": "Santo Agostinho, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "29 de agosto",
+    "nome": "Martírio de São João Batista",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "3 de setembro",
+    "nome": "São Gregório Magno, papa e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "8 de setembro",
+    "nome": "Natividade da Bem-aventurada Virgem Maria",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de setembro",
+    "nome": "São Pedro Claver, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de setembro",
+    "nome": "Santíssimo Nome de Maria",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de setembro",
+    "nome": "São João Crisóstomo, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "14 de setembro",
+    "nome": "Exaltação da Santa Cruz",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "15 de setembro",
+    "nome": "Bem-aventurada Virgem Maria das Dores",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de setembro",
+    "nome": "Santos Cornélio, papa, e Cipriano, bispo, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "17 de setembro",
+    "nome": "Santa Hildegarda de Bingen, virgem e doutora da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de setembro",
+    "nome": "São Roberto Belarmino, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de setembro",
+    "nome": "São Januário, bispo e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "20 de setembro",
+    "nome": "Santos André Kim Tae-gon, presbítero, Paulo Chong Ha-sang e companheiros, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "21 de setembro",
+    "nome": "São Mateus, apóstolo e evangelista",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "23 de setembro",
+    "nome": "São Pio de Pietrelcina, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "26 de setembro",
+    "nome": "Santos Cosme e Damião, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "27 de setembro",
+    "nome": "São Vicente de Paulo, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de setembro",
+    "nome": "São Venceslau, mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "28 de setembro",
+    "nome": "Santos Lourenço Ruiz e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "29 de setembro",
+    "nome": "Santos Arcanjos Miguel, Gabriel e Rafael",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "30 de setembro",
+    "nome": "São Jerônimo, presbítero e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "1 de outubro",
+    "nome": "Santa Teresa do Menino Jesus, virgem e doutora da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de outubro",
+    "nome": "Santos Anjos da Guarda",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "3 de outubro",
+    "nome": "Santos André de Soveral e Ambrósio Francisco Ferro, presbíteros, Mateus Moreira e companheiros, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "4 de outubro",
+    "nome": "São Francisco de Assis",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de outubro",
+    "nome": "São Benedito, o Negro, religioso",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "5 de outubro",
+    "nome": "Santa Faustina Kowalska, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "6 de outubro",
+    "nome": "São Bruno, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de outubro",
+    "nome": "Bem-aventurada Virgem Maria do Rosário",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de outubro",
+    "nome": "São Dionísio, bispo, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "9 de outubro",
+    "nome": "São João Leonardi, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de outubro",
+    "nome": "São João XXIII, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de outubro",
+    "nome": "Bem-aventurada Virgem Maria da Conceição Aparecida",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "14 de outubro",
+    "nome": "São Calisto I, papa e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "15 de outubro",
+    "nome": "Santa Teresa de Jesus, virgem e doutora da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de outubro",
+    "nome": "Santa Hedviges, religiosa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de outubro",
+    "nome": "Santa Margarida Maria Alacoque, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de outubro",
+    "nome": "Santo Inácio de Antioquia, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "18 de outubro",
+    "nome": "São Lucas, evangelista",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "19 de outubro",
+    "nome": "São Pedro de Alcântara, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de outubro",
+    "nome": "Santos João de Brébeuf, Isaac Jogues, presbíteros, e companheiros, mártires",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "19 de outubro",
+    "nome": "São Paulo da Cruz, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de outubro",
+    "nome": "São João Paulo II, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de outubro",
+    "nome": "São João de Capistrano, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "24 de outubro",
+    "nome": "Santo Antônio Maria Claret, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de outubro",
+    "nome": "Santo Antônio de Sant'Ana Galvão, religioso",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de outubro",
+    "nome": "Santos Simão e Judas, apóstolos",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "1 de novembro",
+    "nome": "Todos os Santos",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "2 de novembro",
+    "nome": "Comemoração de Todos os Fiéis Defuntos",
+    "grau": "Comemoração",
+    "cor": "roxo"
+  },
+  {
+    "dia": "3 de novembro",
+    "nome": "São Martinho de Lima, religioso",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "4 de novembro",
+    "nome": "São Carlos Borromeu, bispo",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de novembro",
+    "nome": "Dedicação da Basílica do Latrão",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "10 de novembro",
+    "nome": "São Leão Magno, papa e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de novembro",
+    "nome": "São Martinho de Tours, bispo",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de novembro",
+    "nome": "São Josafá, bispo e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "15 de novembro",
+    "nome": "Santo Alberto Magno, bispo e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de novembro",
+    "nome": "Santa Margarida da Escócia",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "16 de novembro",
+    "nome": "Santa Gertrudes, virgem",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "17 de novembro",
+    "nome": "Santa Isabel da Hungria, religiosa",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "18 de novembro",
+    "nome": "Dedicação das basílicas dos Santos Pedro e Paulo, apóstolos",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "19 de novembro",
+    "nome": "Santos Roque González, Afonso Rodríguez e João del Castillo, presbíteros e mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "21 de novembro",
+    "nome": "Apresentação da Bem-aventurada Virgem Maria",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "22 de novembro",
+    "nome": "Santa Cecília, virgem e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "23 de novembro",
+    "nome": "São Clemente I, papa e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "23 de novembro",
+    "nome": "São Columbano, abade",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "24 de novembro",
+    "nome": "Santo André Dung-Lac, presbítero, e companheiros, mártires",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "25 de novembro",
+    "nome": "Santa Catarina de Alexandria, virgem e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "30 de novembro",
+    "nome": "Santo André, apóstolo",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "3 de dezembro",
+    "nome": "São Francisco Xavier, presbítero",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "4 de dezembro",
+    "nome": "São João Damasceno, presbítero e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "6 de dezembro",
+    "nome": "São Nicolau, bispo",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "7 de dezembro",
+    "nome": "Santo Ambrósio, bispo e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "8 de dezembro",
+    "nome": "Imaculada Conceição da Bem-aventurada Virgem Maria",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "9 de dezembro",
+    "nome": "São João Diego Cuauhtlatoatzin",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "10 de dezembro",
+    "nome": "Bem-aventurada Virgem Maria de Loreto",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "11 de dezembro",
+    "nome": "São Dâmaso I, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "12 de dezembro",
+    "nome": "Bem-aventurada Virgem Maria de Guadalupe, Padroeira principal da América",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "13 de dezembro",
+    "nome": "Santa Luzia, virgem e mártir",
+    "grau": "Memória",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "14 de dezembro",
+    "nome": "São João da Cruz, presbítero e doutor da Igreja",
+    "grau": "Memória",
+    "cor": "branco"
+  },
+  {
+    "dia": "21 de dezembro",
+    "nome": "São Pedro Canísio, presbítero e doutor da Igreja",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "23 de dezembro",
+    "nome": "São João Câncio, presbítero",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  },
+  {
+    "dia": "25 de dezembro",
+    "nome": "Natal do Senhor",
+    "grau": "Solenidade",
+    "cor": "branco"
+  },
+  {
+    "dia": "26 de dezembro",
+    "nome": "Santo Estêvão, Protomártir",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "27 de dezembro",
+    "nome": "São João, Apóstolo e Evangelista",
+    "grau": "Festa",
+    "cor": "branco"
+  },
+  {
+    "dia": "28 de dezembro",
+    "nome": "Os Santos Inocentes, Mártires",
+    "grau": "Festa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "29 de dezembro",
+    "nome": "São Tomás Becket, bispo e mártir",
+    "grau": "Memória facultativa",
+    "cor": "vermelho"
+  },
+  {
+    "dia": "31 de dezembro",
+    "nome": "São Silvestre I, papa",
+    "grau": "Memória facultativa",
+    "cor": "branco"
+  }
+]
