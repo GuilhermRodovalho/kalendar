@@ -46,7 +46,7 @@ func (d Date) String() string {
 	return fmt.Sprintf("%04d-%02d-%02d", d.year, d.month, d.day)
 }
 
-func (d Date) Day() int    { return d.day }
+func (d Date) Day() int     { return d.day }
 func (d Date) Month() Month { return d.month }
 func (d Date) Year() int    { return d.year }
 

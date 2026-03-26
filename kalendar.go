@@ -1,5 +1,68 @@
 package kalendar
 
+// CelebrationGrade representa o grau de celebração conforme o Missal Romano
+type CelebrationGrade string
+
+const (
+	GradeSolenidade         CelebrationGrade = "Solenidade"
+	GradeFesta              CelebrationGrade = "Festa"
+	GradeMemoria            CelebrationGrade = "Memória"
+	GradeMemoriaFacultativa CelebrationGrade = "Memória facultativa"
+	GradeComemoracao        CelebrationGrade = "Comemoração"
+)
+
+// CelebrationLevel representa o nível de precedência (1 = maior)
+type CelebrationLevel int
+
+const (
+	LevelSolenidade         CelebrationLevel = 1
+	LevelFesta              CelebrationLevel = 2
+	LevelMemoria            CelebrationLevel = 3
+	LevelMemoriaFacultativa CelebrationLevel = 4
+	LevelComemoracao        CelebrationLevel = 5
+)
+
+// CelebrationLevel retorna o nível de precedência para ordenação
+func (g CelebrationGrade) Level() CelebrationLevel {
+	switch g {
+	case GradeSolenidade:
+		return LevelSolenidade
+	case GradeFesta:
+		return LevelFesta
+	case GradeMemoria:
+		return LevelMemoria
+	case GradeMemoriaFacultativa:
+		return LevelMemoriaFacultativa
+	case GradeComemoracao:
+		return LevelComemoracao
+	default:
+		return LevelMemoriaFacultativa
+	}
+}
+
+// Saint representa um santo do calendário
+type Saint struct {
+	Name             string           `json:"nome"`
+	Date             string           `json:"dia"`
+	Grade            CelebrationGrade `json:"grau"`
+	Level            CelebrationLevel `json:"nivel"`
+	Color            string           `json:"cor"`
+	IsFeastOfTheLord bool             `json:"festa_do_senhor,omitempty"`
+}
+
+// Celebration representa uma celebração em uma data específica
+type Celebration struct {
+	Date  Date  `json:"data"`
+	Saint Saint `json:"santo"`
+}
+
+// LiturgicSeasonsWithCelebrations combines liturgical seasons with celebrations
+type LiturgicSeasonsWithCelebrations struct {
+	MobileDates     MobileDates `json:"datas_moveis"`
+	LiturgicSeasons `json:"tempos_liturgicos"`
+	Celebrations    []Celebration `json:"celebrações"`
+}
+
 type Calendar int
 
 const (
