@@ -1,66 +1,66 @@
 package kalendar
 
-// CelebrationGrade representa o grau de celebração conforme o Missal Romano
+// CelebrationGrade represents the celebration grade according to the Roman Missal
 type CelebrationGrade string
 
 const (
-	GradeSolenidade         CelebrationGrade = "Solenidade"
-	GradeFesta              CelebrationGrade = "Festa"
-	GradeMemoria            CelebrationGrade = "Memória"
-	GradeMemoriaFacultativa CelebrationGrade = "Memória facultativa"
-	GradeComemoracao        CelebrationGrade = "Comemoração"
+	GradeSolemnity       CelebrationGrade = "Solemnity"
+	GradeFeast           CelebrationGrade = "Feast"
+	GradeMemorial        CelebrationGrade = "Memorial"
+	GradeOptionalMemorial CelebrationGrade = "Optional Memorial"
+	GradeCommemoration   CelebrationGrade = "Commemoration"
 )
 
-// CelebrationLevel representa o nível de precedência (1 = maior)
+// CelebrationLevel represents the precedence level (1 = highest)
 type CelebrationLevel int
 
 const (
-	LevelSolenidade         CelebrationLevel = 1
-	LevelFesta              CelebrationLevel = 2
-	LevelMemoria            CelebrationLevel = 3
-	LevelMemoriaFacultativa CelebrationLevel = 4
-	LevelComemoracao        CelebrationLevel = 5
+	LevelSolemnity       CelebrationLevel = 1
+	LevelFeast           CelebrationLevel = 2
+	LevelMemorial        CelebrationLevel = 3
+	LevelOptionalMemorial CelebrationLevel = 4
+	LevelCommemoration   CelebrationLevel = 5
 )
 
-// CelebrationLevel retorna o nível de precedência para ordenação
+// Level returns the precedence level for sorting
 func (g CelebrationGrade) Level() CelebrationLevel {
 	switch g {
-	case GradeSolenidade:
-		return LevelSolenidade
-	case GradeFesta:
-		return LevelFesta
-	case GradeMemoria:
-		return LevelMemoria
-	case GradeMemoriaFacultativa:
-		return LevelMemoriaFacultativa
-	case GradeComemoracao:
-		return LevelComemoracao
+	case GradeSolemnity:
+		return LevelSolemnity
+	case GradeFeast:
+		return LevelFeast
+	case GradeMemorial:
+		return LevelMemorial
+	case GradeOptionalMemorial:
+		return LevelOptionalMemorial
+	case GradeCommemoration:
+		return LevelCommemoration
 	default:
-		return LevelMemoriaFacultativa
+		return LevelOptionalMemorial
 	}
 }
 
-// Saint representa um santo do calendário
+// Saint represents a saint in the calendar
 type Saint struct {
-	Name             string           `json:"nome"`
-	Date             string           `json:"dia"`
-	Grade            CelebrationGrade `json:"grau"`
-	Level            CelebrationLevel `json:"nivel"`
-	Color            string           `json:"cor"`
-	IsFeastOfTheLord bool             `json:"festa_do_senhor,omitempty"`
+	Name             string           `json:"name"`
+	Date             string           `json:"date"`
+	Grade            CelebrationGrade `json:"grade"`
+	Level            CelebrationLevel `json:"level"`
+	Color            string           `json:"color"`
+	IsFeastOfTheLord bool             `json:"is_feast_of_the_lord,omitempty"`
 }
 
-// Celebration representa uma celebração em uma data específica
+// Celebration represents a celebration on a specific date
 type Celebration struct {
-	Date  Date  `json:"data"`
-	Saint Saint `json:"santo"`
+	Date  Date  `json:"date"`
+	Saint Saint `json:"saint"`
 }
 
 // LiturgicSeasonsWithCelebrations combines liturgical seasons with celebrations
 type LiturgicSeasonsWithCelebrations struct {
-	MobileDates     MobileDates `json:"datas_moveis"`
-	LiturgicSeasons `json:"tempos_liturgicos"`
-	Celebrations    []Celebration `json:"celebrações"`
+	MobileDates     MobileDates   `json:"mobile_dates"`
+	LiturgicSeasons `json:"liturgical_seasons"`
+	Celebrations    []Celebration `json:"celebrations"`
 }
 
 type Calendar int
@@ -101,6 +101,16 @@ type MobileDates struct {
 	HolyTrinity        Feast `json:"holy_trinity"`
 	CorpusChristi      Feast `json:"corpus_christi"`
 	FeastOfSacredHeart Feast `json:"feast_of_the_sacred_heart"`
+
+	Epiphany              Feast `json:"epiphany"`
+	BaptismOfTheLord      Feast `json:"baptism_of_the_lord"`
+	SaintsPeterAndPaul    Feast `json:"saints_peter_and_paul"`
+	AssumptionOfMary      Feast `json:"assumption_of_mary"`
+	AllSaints             Feast `json:"all_saints"`
+	ChristTheKing         Feast `json:"christ_the_king"`
+	HolyFamily            Feast `json:"holy_family"`
+	MaryMotherOfTheChurch Feast `json:"mary_mother_of_the_church"`
+	ImmaculateHeartOfMary Feast `json:"immaculate_heart_of_mary"`
 }
 
 type LiturgicSeasons struct {
@@ -128,11 +138,76 @@ func firstSundayOfAdvent(year int) Date {
 // It is the Sunday after Epiphany (January 6).
 // If Epiphany falls on a Sunday, the Baptism is the following Monday.
 func baptismOfTheLord(year int) Date {
-	epiphany := NewDate(6, JANUARY, year)
-	if epiphany.Weekday() == SUNDAY {
-		return epiphany.Plus(1)
+	epiph := NewDate(6, JANUARY, year)
+	if epiph.Weekday() == SUNDAY {
+		return epiph.Plus(1)
 	}
-	return epiphany.Next(SUNDAY)
+	return epiph.Next(SUNDAY)
+}
+
+// epiphany returns the date of Epiphany of the Lord for the given year.
+// In Brazil (Próprio do Brasil), Epiphany is celebrated on the Sunday
+// between January 2 and January 8.
+func epiphany(year int) Date {
+	return NewDate(2, JANUARY, year).NextOrSame(SUNDAY)
+}
+
+// saintsPeterAndPaul returns the date for the Solemnity of Saints Peter and Paul.
+// In Brazil (Próprio do Brasil), it is celebrated on the Sunday between
+// June 28 and July 4.
+func saintsPeterAndPaul(year int) Date {
+	return NewDate(28, JUNE, year).NextOrSame(SUNDAY)
+}
+
+// assumptionOfMary returns the date for the Solemnity of the Assumption of Mary.
+// In Brazil (Próprio do Brasil), if August 15 is a Sunday it is celebrated on that day;
+// otherwise it is transferred to the following Sunday.
+func assumptionOfMary(year int) Date {
+	return NewDate(15, AUGUST, year).NextOrSame(SUNDAY)
+}
+
+// allSaints returns the date for the Solemnity of All Saints.
+// In Brazil (Próprio do Brasil), if November 1 is a Sunday it is celebrated on that day;
+// otherwise it is transferred to the following Sunday.
+func allSaints(year int) Date {
+	return NewDate(1, NOVEMBER, year).NextOrSame(SUNDAY)
+}
+
+// christTheKing returns the date of the Solemnity of Our Lord Jesus Christ,
+// King of the Universe. It is the last Sunday of Ordinary Time, i.e.,
+// the Sunday before the first Sunday of Advent.
+func christTheKing(year int) Date {
+	advent := firstSundayOfAdvent(year)
+	return advent.Minus(7)
+}
+
+// holyFamily returns the date of the Feast of the Holy Family.
+// It is the Sunday within the Octave of Christmas (December 26-31).
+// If there is no Sunday in that range, it is celebrated on December 30.
+func holyFamily(year int) Date {
+	for day := 26; day <= 31; day++ {
+		d := NewDate(day, DECEMBER, year)
+		if d.Weekday() == SUNDAY {
+			return d
+		}
+	}
+	return NewDate(30, DECEMBER, year)
+}
+
+// maryMotherOfTheChurch returns the date of the Memorial of the
+// Blessed Virgin Mary, Mother of the Church.
+// It is the Monday after Pentecost.
+func maryMotherOfTheChurch(easter Date) Date {
+	pentecost := easter.Plus(49)
+	return pentecost.Plus(1)
+}
+
+// immaculateHeartOfMary returns the date of the Memorial of the
+// Immaculate Heart of the Blessed Virgin Mary.
+// It is the Saturday after the second Sunday after Pentecost
+// (i.e., the Saturday after the feast of the Sacred Heart).
+func immaculateHeartOfMary(easter Date) Date {
+	return easter.Plus(69)
 }
 
 func liturgicYearFromEaster(easter Date) *LiturgicYear {
@@ -154,6 +229,16 @@ func liturgicYearFromEaster(easter Date) *LiturgicYear {
 			HolyTrinity:        Feast{easter.Plus(56), White},
 			CorpusChristi:      Feast{easter.Plus(60), White},
 			FeastOfSacredHeart: Feast{easter.Plus(68), White},
+
+			Epiphany:              Feast{epiphany(year), White},
+			BaptismOfTheLord:      Feast{baptism, White},
+			SaintsPeterAndPaul:    Feast{saintsPeterAndPaul(year), Red},
+			AssumptionOfMary:      Feast{assumptionOfMary(year), White},
+			AllSaints:             Feast{allSaints(year), White},
+			ChristTheKing:         Feast{christTheKing(year), White},
+			HolyFamily:            Feast{holyFamily(year), White},
+			MaryMotherOfTheChurch: Feast{maryMotherOfTheChurch(easter), White},
+			ImmaculateHeartOfMary: Feast{immaculateHeartOfMary(easter), White},
 		},
 		LiturgicSeasons: LiturgicSeasons{
 			Advent:         Season{DateRange{adventStart, NewDate(24, DECEMBER, year-1)}, Purple},

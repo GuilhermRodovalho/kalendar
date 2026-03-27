@@ -136,14 +136,14 @@ func TestCalendarLiturgicoResponse(t *testing.T) {
 		t.Fatalf("failed to unmarshal: %v", err)
 	}
 
-	if _, ok := resp["datas_moveis"]; !ok {
-		t.Error("response should contain 'datas_moveis'")
+	if _, ok := resp["mobile_dates"]; !ok {
+		t.Error("response should contain 'mobile_dates'")
 	}
-	if _, ok := resp["tempos_liturgicos"]; !ok {
-		t.Error("response should contain 'tempos_liturgicos'")
+	if _, ok := resp["liturgical_seasons"]; !ok {
+		t.Error("response should contain 'liturgical_seasons'")
 	}
-	if _, ok := resp["celebrações"]; !ok {
-		t.Error("response should contain 'celebrações'")
+	if _, ok := resp["celebrations"]; !ok {
+		t.Error("response should contain 'celebrations'")
 	}
 }
 
@@ -168,6 +168,12 @@ func TestMobileDatesNotEmpty(t *testing.T) {
 	}
 	if resp.MobileDates.Pentecost.Date.Day() == 0 {
 		t.Error("Pentecost should not be zero day")
+	}
+	if resp.MobileDates.Epiphany.Date.Day() == 0 {
+		t.Error("Epiphany should not be zero day")
+	}
+	if resp.MobileDates.ChristTheKing.Date.Day() == 0 {
+		t.Error("ChristTheKing should not be zero day")
 	}
 }
 
@@ -259,14 +265,14 @@ func TestSaintsGradeDistribution(t *testing.T) {
 		grades[s.Grade]++
 	}
 
-	if grades[kalendar.GradeSolenidade] == 0 {
-		t.Error("should have at least one Solenidade")
+	if grades[kalendar.GradeSolemnity] == 0 {
+		t.Error("should have at least one Solemnity")
 	}
-	if grades[kalendar.GradeFesta] == 0 {
-		t.Error("should have at least one Festa")
+	if grades[kalendar.GradeFeast] == 0 {
+		t.Error("should have at least one Feast")
 	}
-	if grades[kalendar.GradeMemoria] == 0 {
-		t.Error("should have at least one Memória")
+	if grades[kalendar.GradeMemorial] == 0 {
+		t.Error("should have at least one Memorial")
 	}
 }
 
@@ -287,10 +293,71 @@ func TestSaintsColorDistribution(t *testing.T) {
 		colors[s.Color]++
 	}
 
-	if colors["branco"] == 0 {
-		t.Error("should have saints with branco color")
+	if colors["white"] == 0 {
+		t.Error("should have saints with white color")
 	}
-	if colors["vermelho"] == 0 {
-		t.Error("should have saints with vermelho color")
+	if colors["red"] == 0 {
+		t.Error("should have saints with red color")
+	}
+}
+
+func TestSaintsByYearIncludesMobileCelebrations(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /santos/{year}", handleSaintsByYear)
+
+	req := httptest.NewRequest("GET", "/santos/2026", nil)
+	w := httptest.NewRecorder()
+
+	mux.ServeHTTP(w, req)
+
+	var saints []kalendar.Saint
+	json.Unmarshal(w.Body.Bytes(), &saints)
+
+	mobileNames := map[string]bool{
+		"Santos Pedro e Paulo, apóstolos":            false,
+		"Todos os Santos":                            false,
+		"Epifania do Senhor":                         false,
+		"Nosso Senhor Jesus Cristo, Rei do Universo": false,
+	}
+
+	for _, s := range saints {
+		if _, ok := mobileNames[s.Name]; ok {
+			mobileNames[s.Name] = true
+		}
+	}
+
+	for name, found := range mobileNames {
+		if !found {
+			t.Errorf("/santos/2026 should include mobile celebration %q", name)
+		}
+	}
+}
+
+func TestSaintsDoNotIncludeMobileCelebrations(t *testing.T) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /santos", handleSaints)
+
+	req := httptest.NewRequest("GET", "/santos", nil)
+	w := httptest.NewRecorder()
+
+	mux.ServeHTTP(w, req)
+
+	var saints []kalendar.Saint
+	json.Unmarshal(w.Body.Bytes(), &saints)
+
+	mobileOnly := []string{
+		"Epifania do Senhor",
+		"Nosso Senhor Jesus Cristo, Rei do Universo",
+		"Sagrada Família de Jesus, Maria e José",
+		"Bem-aventurada Virgem Maria, Mãe da Igreja",
+		"Imaculado Coração da Bem-aventurada Virgem Maria",
+	}
+
+	for _, s := range saints {
+		for _, mobile := range mobileOnly {
+			if s.Name == mobile {
+				t.Errorf("/santos should NOT include mobile-only celebration %q", mobile)
+			}
+		}
 	}
 }
