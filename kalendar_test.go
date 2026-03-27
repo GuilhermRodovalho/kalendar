@@ -223,3 +223,192 @@ func TestDateGetters(t *testing.T) {
 		t.Errorf("Year: expected 2026, got %d", d.Year())
 	}
 }
+
+func TestEpiphany(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2026: Jan 2 is Friday -> next Sunday = Jan 4
+		{2026, NewDate(4, JANUARY, 2026)},
+		// 2025: Jan 2 is Thursday -> next Sunday = Jan 5
+		{2025, NewDate(5, JANUARY, 2025)},
+		// 2028: Jan 2 is Sunday -> Jan 2
+		{2028, NewDate(2, JANUARY, 2028)},
+	}
+
+	for _, tt := range tests {
+		got := epiphany(tt.year)
+		if got != tt.expected {
+			t.Errorf("epiphany(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestSaintsPeterAndPaul(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2026: June 28 is Sunday -> June 28
+		{2026, NewDate(28, JUNE, 2026)},
+		// 2025: June 28 is Saturday -> next Sunday = June 29
+		{2025, NewDate(29, JUNE, 2025)},
+		// 2027: June 28 is Monday -> next Sunday = July 4
+		{2027, NewDate(4, JULY, 2027)},
+	}
+
+	for _, tt := range tests {
+		got := saintsPeterAndPaul(tt.year)
+		if got != tt.expected {
+			t.Errorf("saintsPeterAndPaul(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestAssumptionOfMary(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2027: Aug 15 is Sunday -> Aug 15
+		{2027, NewDate(15, AUGUST, 2027)},
+		// 2026: Aug 15 is Saturday -> next Sunday = Aug 16
+		{2026, NewDate(16, AUGUST, 2026)},
+		// 2025: Aug 15 is Friday -> next Sunday = Aug 17
+		{2025, NewDate(17, AUGUST, 2025)},
+	}
+
+	for _, tt := range tests {
+		got := assumptionOfMary(tt.year)
+		if got != tt.expected {
+			t.Errorf("assumptionOfMary(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestAllSaints(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2026: Nov 1 is Sunday -> Nov 1
+		{2026, NewDate(1, NOVEMBER, 2026)},
+		// 2025: Nov 1 is Saturday -> next Sunday = Nov 2
+		{2025, NewDate(2, NOVEMBER, 2025)},
+		// 2027: Nov 1 is Monday -> next Sunday = Nov 7
+		{2027, NewDate(7, NOVEMBER, 2027)},
+	}
+
+	for _, tt := range tests {
+		got := allSaints(tt.year)
+		if got != tt.expected {
+			t.Errorf("allSaints(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestChristTheKing(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2026: Advent starts Nov 29 -> Christ the King = Nov 22
+		{2026, NewDate(22, NOVEMBER, 2026)},
+		// 2025: Advent starts Nov 30 -> Christ the King = Nov 23
+		{2025, NewDate(23, NOVEMBER, 2025)},
+		// 2027: Advent starts Nov 28 -> Christ the King = Nov 21
+		{2027, NewDate(21, NOVEMBER, 2027)},
+	}
+
+	for _, tt := range tests {
+		got := christTheKing(tt.year)
+		if got != tt.expected {
+			t.Errorf("christTheKing(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestHolyFamily(t *testing.T) {
+	tests := []struct {
+		year     int
+		expected Date
+	}{
+		// 2026: Dec 25 is Friday -> Dec 27 is Sunday
+		{2026, NewDate(27, DECEMBER, 2026)},
+		// 2025: Dec 25 is Thursday -> Dec 28 is Sunday
+		{2025, NewDate(28, DECEMBER, 2025)},
+		// 2022: Dec 25 is Sunday -> Dec 30 (no Sunday in 26-31 range since 25 is Sunday)
+		{2022, NewDate(30, DECEMBER, 2022)},
+	}
+
+	for _, tt := range tests {
+		got := holyFamily(tt.year)
+		if got != tt.expected {
+			t.Errorf("holyFamily(%d): expected %v, got %v", tt.year, tt.expected, got)
+		}
+	}
+}
+
+func TestMaryMotherOfTheChurch(t *testing.T) {
+	// 2026: Easter = April 5, Pentecost = May 24, Monday = May 25
+	easter2026 := NewDate(5, APRIL, 2026)
+	got := maryMotherOfTheChurch(easter2026)
+	expected := NewDate(25, MAY, 2026)
+	if got != expected {
+		t.Errorf("maryMotherOfTheChurch(2026): expected %v, got %v", expected, got)
+	}
+
+	// 2025: Easter = April 20, Pentecost = June 8, Monday = June 9
+	easter2025 := NewDate(20, APRIL, 2025)
+	got = maryMotherOfTheChurch(easter2025)
+	expected = NewDate(9, JUNE, 2025)
+	if got != expected {
+		t.Errorf("maryMotherOfTheChurch(2025): expected %v, got %v", expected, got)
+	}
+}
+
+func TestImmaculateHeartOfMary(t *testing.T) {
+	// 2026: Easter = April 5 -> +69 = June 13 (Saturday)
+	easter2026 := NewDate(5, APRIL, 2026)
+	got := immaculateHeartOfMary(easter2026)
+	expected := NewDate(13, JUNE, 2026)
+	if got != expected {
+		t.Errorf("immaculateHeartOfMary(2026): expected %v, got %v", expected, got)
+	}
+	if got.Weekday() != SATURDAY {
+		t.Errorf("immaculateHeartOfMary should be a Saturday, got %v", got.Weekday())
+	}
+}
+
+func TestNewMobileDatesInLiturgicYear(t *testing.T) {
+	ly := LiturgicYearOf(2026)
+
+	if ly.MobileDates.Epiphany.Date.Day() == 0 {
+		t.Error("Epiphany should be set")
+	}
+	if ly.MobileDates.BaptismOfTheLord.Date.Day() == 0 {
+		t.Error("BaptismOfTheLord should be set")
+	}
+	if ly.MobileDates.SaintsPeterAndPaul.Date.Day() == 0 {
+		t.Error("SaintsPeterAndPaul should be set")
+	}
+	if ly.MobileDates.AssumptionOfMary.Date.Day() == 0 {
+		t.Error("AssumptionOfMary should be set")
+	}
+	if ly.MobileDates.AllSaints.Date.Day() == 0 {
+		t.Error("AllSaints should be set")
+	}
+	if ly.MobileDates.ChristTheKing.Date.Day() == 0 {
+		t.Error("ChristTheKing should be set")
+	}
+	if ly.MobileDates.HolyFamily.Date.Day() == 0 {
+		t.Error("HolyFamily should be set")
+	}
+	if ly.MobileDates.MaryMotherOfTheChurch.Date.Day() == 0 {
+		t.Error("MaryMotherOfTheChurch should be set")
+	}
+	if ly.MobileDates.ImmaculateHeartOfMary.Date.Day() == 0 {
+		t.Error("ImmaculateHeartOfMary should be set")
+	}
+}

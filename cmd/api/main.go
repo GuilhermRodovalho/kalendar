@@ -15,7 +15,7 @@ func main() {
 	mux.HandleFunc("GET /santos", handleSaints)
 	mux.HandleFunc("GET /santos/{year}", handleSaintsByYear)
 
-	log.Println("Servidor iniciado na porta 8080")
+	log.Println("Server started on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
 
