@@ -8,7 +8,7 @@ import (
 	"sync"
 )
 
-type saintsData struct {
+type rawCelebrationData struct {
 	Dia  string `json:"dia"`
 	Nome string `json:"nome"`
 	Grau string `json:"grau"`
@@ -19,7 +19,7 @@ type saintsData struct {
 var santosData []byte
 
 var (
-	rawCache    []saintsData
+	rawCelebrationCache    []rawCelebrationData
 	rawCacheErr error
 	rawCacheOnce sync.Once
 )
@@ -128,20 +128,20 @@ func isFeastOfTheLord(nome string) bool {
 	return false
 }
 
-func loadRawSaints() ([]saintsData, error) {
+func loadRawCelebrations() ([]rawCelebrationData, error) {
 	rawCacheOnce.Do(func() {
-		var rawData []saintsData
+		var rawData []rawCelebrationData
 		if err := json.Unmarshal(santosData, &rawData); err != nil {
 			rawCacheErr = err
 			return
 		}
-		rawCache = rawData
+		rawCelebrationCache = rawData
 	})
-	return rawCache, rawCacheErr
+	return rawCelebrationCache, rawCacheErr
 }
 
 func loadFixedCelebrations(year int) ([]Celebration, error) {
-	raw, err := loadRawSaints()
+	raw, err := loadRawCelebrations()
 	if err != nil {
 		return nil, err
 	}
@@ -264,16 +264,14 @@ func GetCelebrationsForYear(year int) ([]Celebration, error) {
 }
 
 func GetLiturgicYearWithCelebrations(year int) (*LiturgicSeasonsWithCelebrations, error) {
-	ly := LiturgicYearOf(year)
-	fixed, err := loadFixedCelebrations(year)
+	celebrations, err := GetCelebrationsForYear(year)
 	if err != nil {
 		return nil, err
 	}
 
-	mobile := loadMobileCelebrations(ly)
-
+	ly := LiturgicYearOf(year)
 	return &LiturgicSeasonsWithCelebrations{
 		LiturgicSeasons: ly.LiturgicSeasons,
-		Celebrations:    append(fixed, mobile...),
+		Celebrations:    celebrations,
 	}, nil
 }

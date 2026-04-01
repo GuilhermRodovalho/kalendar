@@ -220,6 +220,7 @@ func TestGetMobileDates(t *testing.T) {
 
 func TestSeasonForDate(t *testing.T) {
 	ly := LiturgicYearOf(2026)
+	ordered := seasonOrder(ly.LiturgicSeasons)
 
 	tests := []struct {
 		date       Date
@@ -235,7 +236,7 @@ func TestSeasonForDate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.date.String(), func(t *testing.T) {
-			season, color := seasonForDate(tt.date, ly.LiturgicSeasons)
+			season, color := seasonForDate(tt.date, &ordered)
 			if season != tt.wantSeason {
 				t.Errorf("season = %v, want %v", season, tt.wantSeason)
 			}

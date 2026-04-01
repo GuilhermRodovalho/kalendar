@@ -77,49 +77,49 @@ const (
 
 type Season struct {
 	DateRange
-	Color LiturgicalColor `json:"color"`
+	Color LiturgicalColor
 }
 
 type Feast struct {
-	Date  Date            `json:"date"`
-	Color LiturgicalColor `json:"color"`
+	Date  Date
+	Color LiturgicalColor
 }
 
 type MobileDates struct {
-	AshWednesday       Feast `json:"ash_wednesday"`
-	PalmSunday         Feast `json:"palm_sunday"`
-	GoodFriday         Feast `json:"good_friday"`
-	Easter             Feast `json:"easter"`
-	AscensionOfTheLord Feast `json:"ascension_of_the_lord"`
-	Pentecost          Feast `json:"pentecost"`
-	HolyTrinity        Feast `json:"holy_trinity"`
-	CorpusChristi      Feast `json:"corpus_christi"`
-	FeastOfSacredHeart Feast `json:"feast_of_the_sacred_heart"`
+	AshWednesday       Feast
+	PalmSunday         Feast
+	GoodFriday         Feast
+	Easter             Feast
+	AscensionOfTheLord Feast
+	Pentecost          Feast
+	HolyTrinity        Feast
+	CorpusChristi      Feast
+	FeastOfSacredHeart Feast
 
-	Epiphany              Feast `json:"epiphany"`
-	BaptismOfTheLord      Feast `json:"baptism_of_the_lord"`
-	SaintsPeterAndPaul    Feast `json:"saints_peter_and_paul"`
-	AssumptionOfMary      Feast `json:"assumption_of_mary"`
-	AllSaints             Feast `json:"all_saints"`
-	ChristTheKing         Feast `json:"christ_the_king"`
-	HolyFamily            Feast `json:"holy_family"`
-	MaryMotherOfTheChurch Feast `json:"mary_mother_of_the_church"`
-	ImmaculateHeartOfMary Feast `json:"immaculate_heart_of_mary"`
+	Epiphany              Feast
+	BaptismOfTheLord      Feast
+	SaintsPeterAndPaul    Feast
+	AssumptionOfMary      Feast
+	AllSaints             Feast
+	ChristTheKing         Feast
+	HolyFamily            Feast
+	MaryMotherOfTheChurch Feast
+	ImmaculateHeartOfMary Feast
 }
 
 type LiturgicSeasons struct {
-	Advent         Season `json:"advent"`
-	Christmas      Season `json:"christmas"`
-	OrdinaryTimeI  Season `json:"ordinary_time_i"`
-	Lent           Season `json:"lent"`
-	EasterTriduum  Season `json:"easter_triduum"`
-	EasterSeason   Season `json:"easter_season"`
-	OrdinaryTimeII Season `json:"ordinary_time_ii"`
+	Advent         Season
+	Christmas      Season
+	OrdinaryTimeI  Season
+	Lent           Season
+	EasterTriduum  Season
+	EasterSeason   Season
+	OrdinaryTimeII Season
 }
 
 type LiturgicYear struct {
-	MobileDates     `json:"mobile_dates"`
-	LiturgicSeasons `json:"seasons"`
+	MobileDates
+	LiturgicSeasons
 }
 
 // firstSundayOfAdvent returns the first Sunday of Advent for the given calendar year.

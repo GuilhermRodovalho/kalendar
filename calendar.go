@@ -39,9 +39,10 @@ type namedSeason struct {
 	season Season
 }
 
-// seasonForDate returns the season name and color for a given date.
-func seasonForDate(d Date, seasons LiturgicSeasons) (SeasonName, LiturgicalColor) {
-	ordered := []namedSeason{
+// seasonOrder returns the ordered list of seasons for a liturgical year.
+// Allocated once per calendar operation instead of per-day.
+func seasonOrder(seasons LiturgicSeasons) [7]namedSeason {
+	return [7]namedSeason{
 		{SeasonAdvent, seasons.Advent},
 		{SeasonChristmas, seasons.Christmas},
 		{SeasonOrdinaryTimeI, seasons.OrdinaryTimeI},
@@ -50,7 +51,10 @@ func seasonForDate(d Date, seasons LiturgicSeasons) (SeasonName, LiturgicalColor
 		{SeasonEasterSeason, seasons.EasterSeason},
 		{SeasonOrdinaryTimeII, seasons.OrdinaryTimeII},
 	}
+}
 
+// seasonForDate returns the season name and color for a given date.
+func seasonForDate(d Date, ordered *[7]namedSeason) (SeasonName, LiturgicalColor) {
 	for _, ns := range ordered {
 		if ns.season.DateRange.Contains(d) {
 			return ns.name, ns.season.Color
@@ -105,10 +109,12 @@ func GetCalendar(year int) ([]CalendarEntry, error) {
 	index := buildCelebrationIndex(celebrations)
 	days := daysInYear(year)
 	entries := make([]CalendarEntry, days)
+	ordered := seasonOrder(ly.LiturgicSeasons)
+	startDate := NewDate(1, JANUARY, year)
 
 	for i := range days {
-		d := NewDate(1, JANUARY, year).Plus(i)
-		seasonName, seasonColor := seasonForDate(d, ly.LiturgicSeasons)
+		d := startDate.Plus(i)
+		seasonName, seasonColor := seasonForDate(d, &ordered)
 
 		dayCelebrations := index[d]
 		if dayCelebrations == nil {
@@ -135,13 +141,10 @@ func GetCalendarDay(year int, month Month, day int) (*CalendarEntry, error) {
 	}
 
 	d := NewDate(day, month, year)
-	seasonName, seasonColor := seasonForDate(d, ly.LiturgicSeasons)
+	ordered := seasonOrder(ly.LiturgicSeasons)
+	seasonName, seasonColor := seasonForDate(d, &ordered)
 
-	index := buildCelebrationIndex(celebrations)
-	dayCelebrations := index[d]
-	if dayCelebrations == nil {
-		dayCelebrations = []DayCelebration{}
-	}
+	dayCelebrations := filterCelebrationsForDate(celebrations, d)
 
 	return &CalendarEntry{
 		Date:         d,
@@ -149,6 +152,23 @@ func GetCalendarDay(year int, month Month, day int) (*CalendarEntry, error) {
 		SeasonColor:  seasonColor,
 		Celebrations: dayCelebrations,
 	}, nil
+}
+
+// filterCelebrationsForDate returns sorted DayCelebrations matching the given date.
+func filterCelebrationsForDate(celebrations []Celebration, d Date) []DayCelebration {
+	var result []DayCelebration
+	for _, c := range celebrations {
+		if c.Date == d {
+			result = append(result, toDayCelebration(c))
+		}
+	}
+	if result == nil {
+		return []DayCelebration{}
+	}
+	sort.Slice(result, func(i, j int) bool {
+		return result[i].Level < result[j].Level
+	})
+	return result
 }
 
 // GetMobileDates returns only the mobile celebrations for a given year.

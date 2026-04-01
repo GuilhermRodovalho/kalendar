@@ -217,12 +217,12 @@ func TestLoadFixedCelebrationsCount(t *testing.T) {
 	}
 }
 
-func TestRawSaintsCache(t *testing.T) {
-	raw1, err1 := loadRawSaints()
-	raw2, err2 := loadRawSaints()
+func TestRawCelebrationCache(t *testing.T) {
+	raw1, err1 := loadRawCelebrations()
+	raw2, err2 := loadRawCelebrations()
 
 	if err1 != nil || err2 != nil {
-		t.Error("loadRawSaints() should not error on cached call")
+		t.Error("loadRawCelebrations() should not error on cached call")
 	}
 
 	if &raw1[0] == &raw2[0] {
