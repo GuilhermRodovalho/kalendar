@@ -205,16 +205,29 @@ func TestGetMobileDates(t *testing.T) {
 	}
 
 	expected := []string{
+		"Páscoa do Senhor",
+		"Pentecostes",
+		"Santíssima Trindade",
+		"Santíssimo Corpo e Sangue de Cristo",
+		"Sagrado Coração de Jesus",
 		"Epifania do Senhor",
 		"Batismo do Senhor",
 		"Santos Pedro e Paulo, apóstolos",
+		"Assunção da Bem-aventurada Virgem Maria",
 		"Todos os Santos",
 		"Nosso Senhor Jesus Cristo, Rei do Universo",
+		"Sagrada Família de Jesus, Maria e José",
+		"Bem-aventurada Virgem Maria, Mãe da Igreja",
+		"Imaculado Coração da Bem-aventurada Virgem Maria",
 	}
 	for _, name := range expected {
 		if !names[name] {
 			t.Errorf("GetMobileDates should include %q", name)
 		}
+	}
+
+	if len(mobile) != 14 {
+		t.Errorf("GetMobileDates should return 14 celebrations, got %d", len(mobile))
 	}
 }
 

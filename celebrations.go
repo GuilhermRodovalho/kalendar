@@ -19,9 +19,9 @@ type rawCelebrationData struct {
 var santosData []byte
 
 var (
-	rawCelebrationCache    []rawCelebrationData
-	rawCacheErr error
-	rawCacheOnce sync.Once
+	rawCelebrationCache []rawCelebrationData
+	rawCacheErr         error
+	rawCacheOnce        sync.Once
 )
 
 func parseMonth(dayStr string) (int, Month) {
@@ -167,6 +167,51 @@ func loadFixedCelebrations(year int) ([]Celebration, error) {
 func loadMobileCelebrations(ly *LiturgicYear) []Celebration {
 	md := ly.MobileDates
 	return []Celebration{
+		{
+			Name:             "Páscoa do Senhor",
+			Date:             md.Easter.Date,
+			Grade:            GradeSolemnity,
+			Level:            LevelSolemnity,
+			Color:            md.Easter.Color,
+			IsFeastOfTheLord: true,
+			IsMovable:        true,
+		},
+		{
+			Name:             "Pentecostes",
+			Date:             md.Pentecost.Date,
+			Grade:            GradeSolemnity,
+			Level:            LevelSolemnity,
+			Color:            md.Pentecost.Color,
+			IsFeastOfTheLord: true,
+			IsMovable:        true,
+		},
+		{
+			Name:             "Santíssima Trindade",
+			Date:             md.HolyTrinity.Date,
+			Grade:            GradeSolemnity,
+			Level:            LevelSolemnity,
+			Color:            md.HolyTrinity.Color,
+			IsFeastOfTheLord: true,
+			IsMovable:        true,
+		},
+		{
+			Name:             "Santíssimo Corpo e Sangue de Cristo",
+			Date:             md.CorpusChristi.Date,
+			Grade:            GradeSolemnity,
+			Level:            LevelSolemnity,
+			Color:            md.CorpusChristi.Color,
+			IsFeastOfTheLord: true,
+			IsMovable:        true,
+		},
+		{
+			Name:             "Sagrado Coração de Jesus",
+			Date:             md.FeastOfSacredHeart.Date,
+			Grade:            GradeSolemnity,
+			Level:            LevelSolemnity,
+			Color:            md.FeastOfSacredHeart.Color,
+			IsFeastOfTheLord: true,
+			IsMovable:        true,
+		},
 		{
 			Name:             "Epifania do Senhor",
 			Date:             md.Epiphany.Date,
