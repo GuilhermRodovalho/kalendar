@@ -170,95 +170,87 @@ func TestIsFeastOfTheLord(t *testing.T) {
 	}
 }
 
-func TestLoadSaints(t *testing.T) {
-	saints, err := loadSaints()
+func TestLoadFixedCelebrations(t *testing.T) {
+	celebrations, err := loadFixedCelebrations(2026)
 	if err != nil {
-		t.Fatalf("loadSaints() error = %v", err)
+		t.Fatalf("loadFixedCelebrations() error = %v", err)
 	}
 
-	if len(saints) == 0 {
-		t.Error("loadSaints() returned empty slice")
+	if len(celebrations) == 0 {
+		t.Error("loadFixedCelebrations() returned empty slice")
 	}
 
-	validColors := map[string]bool{"white": true, "red": true, "purple": true, "green": true, "rose": true}
-	for _, s := range saints {
-		if s.Name == "" {
-			t.Error("saint with empty Name")
+	validColors := map[LiturgicalColor]bool{White: true, Red: true, Purple: true, Green: true, Rose: true}
+	for _, c := range celebrations {
+		if c.Name == "" {
+			t.Error("celebration with empty Name")
 		}
-		if s.Date == "" {
-			t.Error("saint with empty Date")
+		if c.Date.Year() != 2026 {
+			t.Errorf("celebration %q has year %d, want 2026", c.Name, c.Date.Year())
 		}
-		if s.Grade == "" {
-			t.Error("saint with empty Grade")
+		if c.Grade == "" {
+			t.Error("celebration with empty Grade")
 		}
-		if s.Color == "" {
-			t.Error("saint with empty Color")
+		if c.Color == "" {
+			t.Error("celebration with empty Color")
 		}
-		if !validColors[s.Color] {
-			t.Errorf("saint %q has unexpected color %q", s.Name, s.Color)
+		if !validColors[c.Color] {
+			t.Errorf("celebration %q has unexpected color %q", c.Name, c.Color)
 		}
-		if s.Level == 0 {
-			t.Error("saint with zero Level")
+		if c.Level == 0 {
+			t.Error("celebration with zero Level")
+		}
+		if c.IsMovable {
+			t.Errorf("fixed celebration %q should have IsMovable=false", c.Name)
 		}
 	}
 }
 
-func TestLoadSaintsCount(t *testing.T) {
-	saints, err := loadSaints()
+func TestLoadFixedCelebrationsCount(t *testing.T) {
+	celebrations, err := loadFixedCelebrations(2026)
 	if err != nil {
-		t.Fatalf("loadSaints() error = %v", err)
+		t.Fatalf("loadFixedCelebrations() error = %v", err)
 	}
 
-	if len(saints) < 200 {
-		t.Errorf("expected at least 200 saints, got %d", len(saints))
+	if len(celebrations) < 200 {
+		t.Errorf("expected at least 200 celebrations, got %d", len(celebrations))
 	}
 }
 
-func TestGetAllSaints(t *testing.T) {
-	saints, err := GetAllSaints()
-	if err != nil {
-		t.Fatalf("GetAllSaints() error = %v", err)
-	}
-
-	if len(saints) == 0 {
-		t.Error("GetAllSaints() returned empty slice")
-	}
-}
-
-func TestSaintsCache(t *testing.T) {
-	saints1, err1 := loadSaints()
-	saints2, err2 := loadSaints()
+func TestRawSaintsCache(t *testing.T) {
+	raw1, err1 := loadRawSaints()
+	raw2, err2 := loadRawSaints()
 
 	if err1 != nil || err2 != nil {
-		t.Error("loadSaints() should not error on cached call")
+		t.Error("loadRawSaints() should not error on cached call")
 	}
 
-	if &saints1[0] == &saints2[0] {
+	if &raw1[0] == &raw2[0] {
 		t.Log("Cache working - same slice reference")
 	}
 }
 
-func TestGetSaintsForYear(t *testing.T) {
-	saints, err := GetSaintsForYear(2026)
+func TestGetCelebrationsForYear(t *testing.T) {
+	celebrations, err := GetCelebrationsForYear(2026)
 	if err != nil {
-		t.Fatalf("GetSaintsForYear(2026) error = %v", err)
+		t.Fatalf("GetCelebrationsForYear(2026) error = %v", err)
 	}
 
-	if len(saints) == 0 {
-		t.Error("GetSaintsForYear() returned empty slice")
+	if len(celebrations) == 0 {
+		t.Error("GetCelebrationsForYear() returned empty slice")
 	}
 
-	for _, s := range saints {
-		if s.Name == "" {
-			t.Error("saint with empty Name")
+	for _, c := range celebrations {
+		if c.Name == "" {
+			t.Error("celebration with empty Name")
 		}
 	}
 }
 
-func TestGetSaintsForYearIncludesMobile(t *testing.T) {
-	saints, err := GetSaintsForYear(2026)
+func TestGetCelebrationsForYearIncludesMobile(t *testing.T) {
+	celebrations, err := GetCelebrationsForYear(2026)
 	if err != nil {
-		t.Fatalf("GetSaintsForYear(2026) error = %v", err)
+		t.Fatalf("GetCelebrationsForYear(2026) error = %v", err)
 	}
 
 	mobileNames := map[string]bool{
@@ -270,37 +262,39 @@ func TestGetSaintsForYearIncludesMobile(t *testing.T) {
 		"Sagrada Família de Jesus, Maria e José":     false,
 	}
 
-	for _, s := range saints {
-		if _, ok := mobileNames[s.Name]; ok {
-			mobileNames[s.Name] = true
+	for _, c := range celebrations {
+		if _, ok := mobileNames[c.Name]; ok {
+			mobileNames[c.Name] = true
+			if !c.IsMovable {
+				t.Errorf("mobile celebration %q should have IsMovable=true", c.Name)
+			}
 		}
 	}
 
 	for name, found := range mobileNames {
 		if !found {
-			t.Errorf("GetSaintsForYear(2026) should include mobile celebration %q", name)
+			t.Errorf("GetCelebrationsForYear(2026) should include mobile celebration %q", name)
 		}
 	}
 }
 
-func TestGetSaintsForYearMobileDatesVary(t *testing.T) {
-	saints2025, _ := GetSaintsForYear(2025)
-	saints2026, _ := GetSaintsForYear(2026)
+func TestGetCelebrationsForYearMobileDatesVary(t *testing.T) {
+	celebrations2025, _ := GetCelebrationsForYear(2025)
+	celebrations2026, _ := GetCelebrationsForYear(2026)
 
-	findDate := func(saints []Saint, name string) string {
-		for _, s := range saints {
-			if s.Name == name {
-				return s.Date
+	findDate := func(celebrations []Celebration, name string) Date {
+		for _, c := range celebrations {
+			if c.Name == name {
+				return c.Date
 			}
 		}
-		return ""
+		return Date{}
 	}
 
-	// Saints Peter and Paul should have different dates in different years
-	pp2025 := findDate(saints2025, "Santos Pedro e Paulo, apóstolos")
-	pp2026 := findDate(saints2026, "Santos Pedro e Paulo, apóstolos")
+	pp2025 := findDate(celebrations2025, "Santos Pedro e Paulo, apóstolos")
+	pp2026 := findDate(celebrations2026, "Santos Pedro e Paulo, apóstolos")
 
-	if pp2025 == "" || pp2026 == "" {
+	if pp2025 == (Date{}) || pp2026 == (Date{}) {
 		t.Error("Saints Peter and Paul should be present in both years")
 	}
 	// 2025: June 28 is Saturday -> Sunday June 29
@@ -316,35 +310,13 @@ func TestGetLiturgicYearWithCelebrations(t *testing.T) {
 		t.Fatalf("GetLiturgicYearWithCelebrations(2026) error = %v", err)
 	}
 
-	if ly.MobileDates.Easter.Date.Year() != 2026 {
-		t.Errorf("Easter year = %d, want 2026", ly.MobileDates.Easter.Date.Year())
-	}
-
 	if len(ly.Celebrations) == 0 {
 		t.Error("celebrations slice is empty")
 	}
-}
 
-func TestGetLiturgicYearWithCelebrationsMobileDates(t *testing.T) {
-	tests := []struct {
-		year int
-		want Date
-	}{
-		{2025, NewDate(20, APRIL, 2025)},
-		{2026, NewDate(5, APRIL, 2026)},
-		{2027, NewDate(28, MARCH, 2027)},
-	}
-
-	for _, tt := range tests {
-		t.Run(string(rune(tt.year)), func(t *testing.T) {
-			ly, err := GetLiturgicYearWithCelebrations(tt.year)
-			if err != nil {
-				t.Fatalf("error = %v", err)
-			}
-			if ly.MobileDates.Easter.Date != tt.want {
-				t.Errorf("Easter = %v, want %v", ly.MobileDates.Easter.Date, tt.want)
-			}
-		})
+	// Verify seasons are populated
+	if ly.LiturgicSeasons.Advent.Start.Year() == 0 {
+		t.Error("Advent start should be set")
 	}
 }
 
@@ -363,8 +335,8 @@ func TestGetLiturgicYearWithCelebrationsIncludesMobile(t *testing.T) {
 	}
 
 	for _, c := range ly.Celebrations {
-		if _, ok := mobileNames[c.Saint.Name]; ok {
-			mobileNames[c.Saint.Name] = true
+		if _, ok := mobileNames[c.Name]; ok {
+			mobileNames[c.Name] = true
 		}
 	}
 
@@ -375,60 +347,42 @@ func TestGetLiturgicYearWithCelebrationsIncludesMobile(t *testing.T) {
 	}
 }
 
-func TestSaintFields(t *testing.T) {
-	s := Saint{
+func TestCelebrationFields(t *testing.T) {
+	c := Celebration{
 		Name:             "Natal do Senhor",
-		Date:             "25 de dezembro",
+		Date:             NewDate(25, DECEMBER, 2026),
 		Grade:            GradeSolemnity,
 		Level:            LevelSolemnity,
-		Color:            "white",
+		Color:            White,
 		IsFeastOfTheLord: true,
+		IsMovable:        false,
 	}
 
-	if s.Name != "Natal do Senhor" {
-		t.Errorf("Name = %v, want Natal do Senhor", s.Name)
+	if c.Name != "Natal do Senhor" {
+		t.Errorf("Name = %v, want Natal do Senhor", c.Name)
 	}
-	if s.Grade != GradeSolemnity {
-		t.Errorf("Grade = %v, want Solemnity", s.Grade)
+	if c.Date != NewDate(25, DECEMBER, 2026) {
+		t.Errorf("Date = %v, want 2026-12-25", c.Date)
 	}
-	if s.Level != LevelSolemnity {
-		t.Errorf("Level = %v, want 1", s.Level)
+	if c.Grade != GradeSolemnity {
+		t.Errorf("Grade = %v, want Solemnity", c.Grade)
 	}
-	if s.Color != "white" {
-		t.Errorf("Color = %v, want white", s.Color)
+	if c.Level != LevelSolemnity {
+		t.Errorf("Level = %v, want 1", c.Level)
 	}
-	if !s.IsFeastOfTheLord {
+	if c.Color != White {
+		t.Errorf("Color = %v, want white", c.Color)
+	}
+	if !c.IsFeastOfTheLord {
 		t.Error("IsFeastOfTheLord should be true")
 	}
-}
-
-func TestCelebrationFields(t *testing.T) {
-	date := NewDate(25, DECEMBER, 2026)
-	s := Saint{
-		Name:  "Natal do Senhor",
-		Date:  "25 de dezembro",
-		Grade: GradeSolemnity,
-		Color: "white",
-	}
-
-	c := Celebration{
-		Date:  date,
-		Saint: s,
-	}
-
-	if c.Date != date {
-		t.Errorf("Date = %v, want %v", c.Date, date)
-	}
-	if c.Saint.Name != "Natal do Senhor" {
-		t.Errorf("Saint.Name = %v, want Natal do Senhor", c.Saint.Name)
+	if c.IsMovable {
+		t.Error("IsMovable should be false")
 	}
 }
 
 func TestLiturgicSeasonsWithCelebrationsFields(t *testing.T) {
 	ly := &LiturgicSeasonsWithCelebrations{
-		MobileDates: MobileDates{
-			Easter: Feast{Date: NewDate(5, APRIL, 2026), Color: White},
-		},
 		LiturgicSeasons: LiturgicSeasons{
 			Advent: Season{
 				DateRange: DateRange{
@@ -441,9 +395,6 @@ func TestLiturgicSeasonsWithCelebrationsFields(t *testing.T) {
 		Celebrations: []Celebration{},
 	}
 
-	if ly.MobileDates.Easter.Date.Year() != 2026 {
-		t.Errorf("MobileDates.Easter.Year = %d, want 2026", ly.MobileDates.Easter.Date.Year())
-	}
 	if ly.LiturgicSeasons.Advent.Start.Month() != NOVEMBER {
 		t.Errorf("Advent.Start.Month = %v, want NOVEMBER", ly.LiturgicSeasons.Advent.Start.Month())
 	}
@@ -452,14 +403,16 @@ func TestLiturgicSeasonsWithCelebrationsFields(t *testing.T) {
 func TestTranslateColor(t *testing.T) {
 	tests := []struct {
 		input string
-		want  string
+		want  LiturgicalColor
 	}{
-		{"branco", "white"},
-		{"vermelho", "red"},
-		{"roxo", "purple"},
-		{"verde", "green"},
-		{"rosa", "rose"},
-		{"unknown", "unknown"},
+		{"branco", White},
+		{"vermelho", Red},
+		{"roxo", Purple},
+		{"verde", Green},
+		{"rosa", Rose},
+		{"white", White},
+		{"red", Red},
+		{"unknown", LiturgicalColor("unknown")},
 	}
 
 	for _, tt := range tests {
@@ -467,26 +420,6 @@ func TestTranslateColor(t *testing.T) {
 			got := translateColor(tt.input)
 			if got != tt.want {
 				t.Errorf("translateColor(%q) = %q, want %q", tt.input, got, tt.want)
-			}
-		})
-	}
-}
-
-func TestFormatDatePortuguese(t *testing.T) {
-	tests := []struct {
-		date Date
-		want string
-	}{
-		{NewDate(5, APRIL, 2026), "5 de abril"},
-		{NewDate(25, DECEMBER, 2026), "25 de dezembro"},
-		{NewDate(1, JANUARY, 2026), "1 de janeiro"},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.want, func(t *testing.T) {
-			got := formatDatePortuguese(tt.date)
-			if got != tt.want {
-				t.Errorf("formatDatePortuguese(%v) = %q, want %q", tt.date, got, tt.want)
 			}
 		})
 	}

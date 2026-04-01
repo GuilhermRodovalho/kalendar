@@ -92,7 +92,22 @@ func (d Date) Next(w Weekday) Date {
 	return d.Plus(1).NextOrSame(w)
 }
 
+// Before returns true if d is strictly before other.
+func (d Date) Before(other Date) bool {
+	return d.toTime().Before(other.toTime())
+}
+
+// After returns true if d is strictly after other.
+func (d Date) After(other Date) bool {
+	return d.toTime().After(other.toTime())
+}
+
 type DateRange struct {
 	Start Date `json:"start"`
 	End   Date `json:"end"`
+}
+
+// Contains returns true if d is within the range [Start, End] inclusive.
+func (r DateRange) Contains(d Date) bool {
+	return !d.Before(r.Start) && !d.After(r.End)
 }

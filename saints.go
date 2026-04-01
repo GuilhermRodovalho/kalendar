@@ -3,9 +3,9 @@ package kalendar
 import (
 	_ "embed"
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 type saintsData struct {
@@ -18,7 +18,11 @@ type saintsData struct {
 //go:embed santos_missale.json
 var santosData []byte
 
-var saintsCache []Saint
+var (
+	rawCache    []saintsData
+	rawCacheErr error
+	rawCacheOnce sync.Once
+)
 
 func parseMonth(dayStr string) (int, Month) {
 	parts := strings.Fields(dayStr)
@@ -83,20 +87,20 @@ func parseGrade(grau string) CelebrationGrade {
 	}
 }
 
-func translateColor(cor string) string {
+func translateColor(cor string) LiturgicalColor {
 	switch strings.ToLower(cor) {
-	case "branco":
-		return "white"
-	case "vermelho":
-		return "red"
-	case "roxo":
-		return "purple"
-	case "verde":
-		return "green"
-	case "rosa":
-		return "rose"
+	case "branco", "white":
+		return White
+	case "vermelho", "red":
+		return Red
+	case "roxo", "purple":
+		return Purple
+	case "verde", "green":
+		return Green
+	case "rosa", "rose":
+		return Rose
 	default:
-		return cor
+		return LiturgicalColor(cor)
 	}
 }
 
@@ -124,189 +128,152 @@ func isFeastOfTheLord(nome string) bool {
 	return false
 }
 
-func loadSaints() ([]Saint, error) {
-	if saintsCache != nil {
-		return saintsCache, nil
-	}
+func loadRawSaints() ([]saintsData, error) {
+	rawCacheOnce.Do(func() {
+		var rawData []saintsData
+		if err := json.Unmarshal(santosData, &rawData); err != nil {
+			rawCacheErr = err
+			return
+		}
+		rawCache = rawData
+	})
+	return rawCache, rawCacheErr
+}
 
-	var rawData []saintsData
-	if err := json.Unmarshal(santosData, &rawData); err != nil {
+func loadFixedCelebrations(year int) ([]Celebration, error) {
+	raw, err := loadRawSaints()
+	if err != nil {
 		return nil, err
 	}
 
-	saints := make([]Saint, len(rawData))
-	for i, s := range rawData {
+	celebrations := make([]Celebration, len(raw))
+	for i, s := range raw {
+		day, month := parseMonth(s.Dia)
 		grade := parseGrade(s.Grau)
-		saints[i] = Saint{
+		celebrations[i] = Celebration{
 			Name:             s.Nome,
-			Date:             s.Dia,
+			Date:             NewDate(day, month, year),
 			Grade:            grade,
 			Level:            grade.Level(),
 			Color:            translateColor(s.Cor),
 			IsFeastOfTheLord: isFeastOfTheLord(s.Nome),
+			IsMovable:        false,
 		}
 	}
 
-	saintsCache = saints
-	return saintsCache, nil
+	return celebrations, nil
 }
 
-func GetAllSaints() ([]Saint, error) {
-	return loadSaints()
-}
-
-var monthNamesPortuguese = map[Month]string{
-	JANUARY:   "janeiro",
-	FEBRUARY:  "fevereiro",
-	MARCH:     "março",
-	APRIL:     "abril",
-	MAY:       "maio",
-	JUNE:      "junho",
-	JULY:      "julho",
-	AUGUST:    "agosto",
-	SEPTEMBER: "setembro",
-	OCTOBER:   "outubro",
-	NOVEMBER:  "novembro",
-	DECEMBER:  "dezembro",
-}
-
-// formatDatePortuguese formats a Date as "D de mês" in Portuguese.
-func formatDatePortuguese(d Date) string {
-	return fmt.Sprintf("%d de %s", d.Day(), monthNamesPortuguese[d.Month()])
-}
-
-// mobileSaints returns the mobile celebrations as Saints with dates resolved for the given year.
-func mobileSaints(ly *LiturgicYear) []Saint {
+func loadMobileCelebrations(ly *LiturgicYear) []Celebration {
 	md := ly.MobileDates
-	return []Saint{
+	return []Celebration{
 		{
 			Name:             "Epifania do Senhor",
-			Date:             formatDatePortuguese(md.Epiphany.Date),
+			Date:             md.Epiphany.Date,
 			Grade:            GradeSolemnity,
 			Level:            LevelSolemnity,
-			Color:            string(md.Epiphany.Color),
+			Color:            md.Epiphany.Color,
 			IsFeastOfTheLord: true,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Batismo do Senhor",
-			Date:             formatDatePortuguese(md.BaptismOfTheLord.Date),
+			Date:             md.BaptismOfTheLord.Date,
 			Grade:            GradeFeast,
 			Level:            LevelFeast,
-			Color:            string(md.BaptismOfTheLord.Color),
+			Color:            md.BaptismOfTheLord.Color,
 			IsFeastOfTheLord: true,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Santos Pedro e Paulo, apóstolos",
-			Date:             formatDatePortuguese(md.SaintsPeterAndPaul.Date),
+			Date:             md.SaintsPeterAndPaul.Date,
 			Grade:            GradeSolemnity,
 			Level:            LevelSolemnity,
-			Color:            string(md.SaintsPeterAndPaul.Color),
+			Color:            md.SaintsPeterAndPaul.Color,
 			IsFeastOfTheLord: false,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Assunção da Bem-aventurada Virgem Maria",
-			Date:             formatDatePortuguese(md.AssumptionOfMary.Date),
+			Date:             md.AssumptionOfMary.Date,
 			Grade:            GradeSolemnity,
 			Level:            LevelSolemnity,
-			Color:            string(md.AssumptionOfMary.Color),
+			Color:            md.AssumptionOfMary.Color,
 			IsFeastOfTheLord: false,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Todos os Santos",
-			Date:             formatDatePortuguese(md.AllSaints.Date),
+			Date:             md.AllSaints.Date,
 			Grade:            GradeSolemnity,
 			Level:            LevelSolemnity,
-			Color:            string(md.AllSaints.Color),
+			Color:            md.AllSaints.Color,
 			IsFeastOfTheLord: false,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Nosso Senhor Jesus Cristo, Rei do Universo",
-			Date:             formatDatePortuguese(md.ChristTheKing.Date),
+			Date:             md.ChristTheKing.Date,
 			Grade:            GradeSolemnity,
 			Level:            LevelSolemnity,
-			Color:            string(md.ChristTheKing.Color),
+			Color:            md.ChristTheKing.Color,
 			IsFeastOfTheLord: true,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Sagrada Família de Jesus, Maria e José",
-			Date:             formatDatePortuguese(md.HolyFamily.Date),
+			Date:             md.HolyFamily.Date,
 			Grade:            GradeFeast,
 			Level:            LevelFeast,
-			Color:            string(md.HolyFamily.Color),
+			Color:            md.HolyFamily.Color,
 			IsFeastOfTheLord: true,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Bem-aventurada Virgem Maria, Mãe da Igreja",
-			Date:             formatDatePortuguese(md.MaryMotherOfTheChurch.Date),
+			Date:             md.MaryMotherOfTheChurch.Date,
 			Grade:            GradeMemorial,
 			Level:            LevelMemorial,
-			Color:            string(md.MaryMotherOfTheChurch.Color),
+			Color:            md.MaryMotherOfTheChurch.Color,
 			IsFeastOfTheLord: false,
+			IsMovable:        true,
 		},
 		{
 			Name:             "Imaculado Coração da Bem-aventurada Virgem Maria",
-			Date:             formatDatePortuguese(md.ImmaculateHeartOfMary.Date),
+			Date:             md.ImmaculateHeartOfMary.Date,
 			Grade:            GradeMemorial,
 			Level:            LevelMemorial,
-			Color:            string(md.ImmaculateHeartOfMary.Color),
+			Color:            md.ImmaculateHeartOfMary.Color,
 			IsFeastOfTheLord: false,
+			IsMovable:        true,
 		},
 	}
 }
 
-// mobileCelebrations converts MobileDates fields into Celebrations.
-func mobileCelebrations(ly *LiturgicYear) []Celebration {
-	saints := mobileSaints(ly)
-	year := ly.MobileDates.Epiphany.Date.Year()
-	celebrations := make([]Celebration, len(saints))
-	for i, s := range saints {
-		day, month := parseMonth(s.Date)
-		celebrations[i] = Celebration{
-			Date:  NewDate(day, month, year),
-			Saint: s,
-		}
-	}
-	return celebrations
-}
-
-func GetSaintsForYear(year int) ([]Saint, error) {
-	saints, err := loadSaints()
+func GetCelebrationsForYear(year int) ([]Celebration, error) {
+	fixed, err := loadFixedCelebrations(year)
 	if err != nil {
 		return nil, err
 	}
 
 	ly := LiturgicYearOf(year)
-	mobile := mobileSaints(ly)
+	mobile := loadMobileCelebrations(ly)
 
-	result := make([]Saint, len(saints), len(saints)+len(mobile))
-	copy(result, saints)
-	result = append(result, mobile...)
-
-	return result, nil
+	return append(fixed, mobile...), nil
 }
 
 func GetLiturgicYearWithCelebrations(year int) (*LiturgicSeasonsWithCelebrations, error) {
 	ly := LiturgicYearOf(year)
-	saints, err := loadSaints()
+	fixed, err := loadFixedCelebrations(year)
 	if err != nil {
 		return nil, err
 	}
 
-	mobile := mobileCelebrations(ly)
-	celebrations := make([]Celebration, 0, len(saints)+len(mobile))
-	for _, s := range saints {
-		day, month := parseMonth(s.Date)
-		date := NewDate(day, month, year)
-		celebrations = append(celebrations, Celebration{
-			Date:  date,
-			Saint: s,
-		})
-	}
-	celebrations = append(celebrations, mobile...)
+	mobile := loadMobileCelebrations(ly)
 
 	return &LiturgicSeasonsWithCelebrations{
-		MobileDates:     ly.MobileDates,
 		LiturgicSeasons: ly.LiturgicSeasons,
-		Celebrations:    celebrations,
+		Celebrations:    append(fixed, mobile...),
 	}, nil
 }

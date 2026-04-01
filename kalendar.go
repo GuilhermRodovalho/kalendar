@@ -40,25 +40,19 @@ func (g CelebrationGrade) Level() CelebrationLevel {
 	}
 }
 
-// Saint represents a saint in the calendar
-type Saint struct {
+// Celebration represents a liturgical celebration on a specific date
+type Celebration struct {
 	Name             string           `json:"name"`
-	Date             string           `json:"date"`
+	Date             Date             `json:"date"`
 	Grade            CelebrationGrade `json:"grade"`
 	Level            CelebrationLevel `json:"level"`
-	Color            string           `json:"color"`
+	Color            LiturgicalColor  `json:"color"`
 	IsFeastOfTheLord bool             `json:"is_feast_of_the_lord,omitempty"`
-}
-
-// Celebration represents a celebration on a specific date
-type Celebration struct {
-	Date  Date  `json:"date"`
-	Saint Saint `json:"saint"`
+	IsMovable        bool             `json:"is_movable"`
 }
 
 // LiturgicSeasonsWithCelebrations combines liturgical seasons with celebrations
 type LiturgicSeasonsWithCelebrations struct {
-	MobileDates     MobileDates   `json:"mobile_dates"`
 	LiturgicSeasons `json:"liturgical_seasons"`
 	Celebrations    []Celebration `json:"celebrations"`
 }
