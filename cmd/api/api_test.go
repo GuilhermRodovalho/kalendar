@@ -283,6 +283,53 @@ func TestCelebrationsIncludesMobile(t *testing.T) {
 	}
 }
 
+// CORS tests
+
+func setupCORSMux() http.Handler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /calendar/{year}", handleCalendar)
+	return corsMiddleware(mux)
+}
+
+func TestCORSHeadersOnGET(t *testing.T) {
+	handler := setupCORSMux()
+
+	req := httptest.NewRequest("GET", "/calendar/2026", nil)
+	w := httptest.NewRecorder()
+	handler.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("status = %d, want %d", w.Code, http.StatusOK)
+	}
+
+	origin := w.Header().Get("Access-Control-Allow-Origin")
+	if origin != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want %q", origin, "*")
+	}
+}
+
+func TestCORSPreflightOptions(t *testing.T) {
+	handler := setupCORSMux()
+
+	req := httptest.NewRequest("OPTIONS", "/calendar/2026", nil)
+	w := httptest.NewRecorder()
+	handler.ServeHTTP(w, req)
+
+	if w.Code != http.StatusNoContent {
+		t.Errorf("status = %d, want %d", w.Code, http.StatusNoContent)
+	}
+
+	origin := w.Header().Get("Access-Control-Allow-Origin")
+	if origin != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want %q", origin, "*")
+	}
+
+	methods := w.Header().Get("Access-Control-Allow-Methods")
+	if !strings.Contains(methods, "GET") {
+		t.Errorf("Access-Control-Allow-Methods = %q, should contain GET", methods)
+	}
+}
+
 // Phase 2 API tests
 
 func setupCalendarMux() *http.ServeMux {
