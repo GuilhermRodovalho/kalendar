@@ -205,11 +205,15 @@ func TestGetMobileDates(t *testing.T) {
 	}
 
 	expected := []string{
+		"Quarta-feira de Cinzas",
+		"Domingo de Ramos da Paixão do Senhor",
+		"Sexta-feira Santa da Paixão do Senhor",
 		"Páscoa do Senhor",
 		"Pentecostes",
 		"Santíssima Trindade",
 		"Santíssimo Corpo e Sangue de Cristo",
 		"Sagrado Coração de Jesus",
+		"Ascensão do Senhor",
 		"Epifania do Senhor",
 		"Batismo do Senhor",
 		"Santos Pedro e Paulo, apóstolos",
@@ -226,8 +230,8 @@ func TestGetMobileDates(t *testing.T) {
 		}
 	}
 
-	if len(mobile) != 14 {
-		t.Errorf("GetMobileDates should return 14 celebrations, got %d", len(mobile))
+	if len(mobile) != 18 {
+		t.Errorf("GetMobileDates should return 18 celebrations, got %d", len(mobile))
 	}
 }
 
