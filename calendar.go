@@ -24,14 +24,19 @@ type DayCelebration struct {
 	Color            LiturgicalColor  `json:"color"`
 	IsFeastOfTheLord bool             `json:"is_feast_of_the_lord,omitempty"`
 	IsMovable        bool             `json:"is_movable"`
+	MissalPage       int              `json:"missal_page,omitempty"`
+	Prefaces         []Preface        `json:"prefaces,omitempty"`
+	CommonRef        *CommonReference `json:"common_ref,omitempty"`
 }
 
 // CalendarEntry represents a single day in the liturgical calendar.
 type CalendarEntry struct {
-	Date         Date              `json:"date"`
-	Season       SeasonName        `json:"season"`
-	SeasonColor  LiturgicalColor   `json:"season_color"`
-	Celebrations []DayCelebration  `json:"celebrations"`
+	Date             Date             `json:"date"`
+	Season           SeasonName       `json:"season"`
+	SeasonColor      LiturgicalColor  `json:"season_color"`
+	Celebrations     []DayCelebration `json:"celebrations"`
+	SeasonMissalPage int              `json:"season_missal_page,omitempty"`
+	SeasonPrefaces   []Preface        `json:"season_prefaces,omitempty"`
 }
 
 type namedSeason struct {
@@ -121,11 +126,24 @@ func GetCalendar(year int) ([]CalendarEntry, error) {
 			dayCelebrations = []DayCelebration{}
 		}
 
+		seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, ly)
+
+		for i := range dayCelebrations {
+			ref := resolveCelebrationMissal(dayCelebrations[i].Name, d, dayCelebrations[i].IsMovable)
+			if ref != nil {
+				dayCelebrations[i].MissalPage = ref.MissalPage
+				dayCelebrations[i].Prefaces = ref.Prefaces
+				dayCelebrations[i].CommonRef = ref.CommonRef
+			}
+		}
+
 		entries[i] = CalendarEntry{
-			Date:         d,
-			Season:       seasonName,
-			SeasonColor:  seasonColor,
-			Celebrations: dayCelebrations,
+			Date:             d,
+			Season:           seasonName,
+			SeasonColor:      seasonColor,
+			Celebrations:     dayCelebrations,
+			SeasonMissalPage: seasonPage,
+			SeasonPrefaces:   seasonPrefaces,
 		}
 	}
 
@@ -146,11 +164,24 @@ func GetCalendarDay(year int, month Month, day int) (*CalendarEntry, error) {
 
 	dayCelebrations := filterCelebrationsForDate(celebrations, d)
 
+	seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, ly)
+
+	for i := range dayCelebrations {
+		ref := resolveCelebrationMissal(dayCelebrations[i].Name, d, dayCelebrations[i].IsMovable)
+		if ref != nil {
+			dayCelebrations[i].MissalPage = ref.MissalPage
+			dayCelebrations[i].Prefaces = ref.Prefaces
+			dayCelebrations[i].CommonRef = ref.CommonRef
+		}
+	}
+
 	return &CalendarEntry{
-		Date:         d,
-		Season:       seasonName,
-		SeasonColor:  seasonColor,
-		Celebrations: dayCelebrations,
+		Date:             d,
+		Season:           seasonName,
+		SeasonColor:      seasonColor,
+		Celebrations:     dayCelebrations,
+		SeasonMissalPage: seasonPage,
+		SeasonPrefaces:   seasonPrefaces,
 	}, nil
 }
 
