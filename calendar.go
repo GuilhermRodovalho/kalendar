@@ -58,15 +58,19 @@ func seasonOrder(seasons LiturgicSeasons) [7]namedSeason {
 	}
 }
 
-// seasonForDate returns the season name and color for a given date.
-func seasonForDate(d Date, ordered *[7]namedSeason) (SeasonName, LiturgicalColor) {
-	for _, ns := range ordered {
-		if ns.season.DateRange.Contains(d) {
-			return ns.name, ns.season.Color
+// seasonForDate returns the season name, color, and which season set index matched.
+// It checks multiple season sets (current and next liturgical year) so that
+// the Advent/Christmas seasons at the end of the civil year are found.
+func seasonForDate(d Date, seasonSets ...*[7]namedSeason) (SeasonName, LiturgicalColor, int) {
+	for idx, ordered := range seasonSets {
+		for _, ns := range ordered {
+			if ns.season.DateRange.Contains(d) {
+				return ns.name, ns.season.Color, idx
+			}
 		}
 	}
 
-	return SeasonOrdinaryTimeII, Green
+	return SeasonOrdinaryTimeII, Green, 0
 }
 
 // toDayCelebration converts a Celebration to a DayCelebration (drops the Date).
@@ -106,6 +110,7 @@ func daysInYear(year int) int {
 // GetCalendar returns a CalendarEntry for each day of the given civil year.
 func GetCalendar(year int) ([]CalendarEntry, error) {
 	ly := LiturgicYearOf(year)
+	nextLy := LiturgicYearOf(year + 1)
 	celebrations, err := GetCelebrationsForYear(year)
 	if err != nil {
 		return nil, err
@@ -115,18 +120,21 @@ func GetCalendar(year int) ([]CalendarEntry, error) {
 	days := daysInYear(year)
 	entries := make([]CalendarEntry, days)
 	ordered := seasonOrder(ly.LiturgicSeasons)
+	nextOrdered := seasonOrder(nextLy.LiturgicSeasons)
 	startDate := NewDate(1, JANUARY, year)
+
+	lyByIndex := []*LiturgicYear{ly, nextLy}
 
 	for i := range days {
 		d := startDate.Plus(i)
-		seasonName, seasonColor := seasonForDate(d, &ordered)
+		seasonName, seasonColor, lyIdx := seasonForDate(d, &ordered, &nextOrdered)
 
 		dayCelebrations := index[d]
 		if dayCelebrations == nil {
 			dayCelebrations = []DayCelebration{}
 		}
 
-		seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, ly)
+		seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, lyByIndex[lyIdx])
 
 		for i := range dayCelebrations {
 			ref := resolveCelebrationMissal(dayCelebrations[i].Name, d, dayCelebrations[i].IsMovable)
@@ -153,6 +161,7 @@ func GetCalendar(year int) ([]CalendarEntry, error) {
 // GetCalendarDay returns the CalendarEntry for a specific date.
 func GetCalendarDay(year int, month Month, day int) (*CalendarEntry, error) {
 	ly := LiturgicYearOf(year)
+	nextLy := LiturgicYearOf(year + 1)
 	celebrations, err := GetCelebrationsForYear(year)
 	if err != nil {
 		return nil, err
@@ -160,11 +169,13 @@ func GetCalendarDay(year int, month Month, day int) (*CalendarEntry, error) {
 
 	d := NewDate(day, month, year)
 	ordered := seasonOrder(ly.LiturgicSeasons)
-	seasonName, seasonColor := seasonForDate(d, &ordered)
+	nextOrdered := seasonOrder(nextLy.LiturgicSeasons)
+	seasonName, seasonColor, lyIdx := seasonForDate(d, &ordered, &nextOrdered)
 
+	lyByIndex := []*LiturgicYear{ly, nextLy}
 	dayCelebrations := filterCelebrationsForDate(celebrations, d)
 
-	seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, ly)
+	seasonPage, seasonPrefaces := resolveSeasonMissal(d, seasonName, lyByIndex[lyIdx])
 
 	for i := range dayCelebrations {
 		ref := resolveCelebrationMissal(dayCelebrations[i].Name, d, dayCelebrations[i].IsMovable)

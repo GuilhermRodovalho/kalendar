@@ -253,7 +253,7 @@ func TestSeasonForDate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.date.String(), func(t *testing.T) {
-			season, color := seasonForDate(tt.date, &ordered)
+			season, color, _ := seasonForDate(tt.date, &ordered)
 			if season != tt.wantSeason {
 				t.Errorf("season = %v, want %v", season, tt.wantSeason)
 			}
